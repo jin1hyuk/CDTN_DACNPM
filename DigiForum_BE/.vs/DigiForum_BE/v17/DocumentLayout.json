@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\JinHyuk\\Downloads\\DigiForum_Nhom1\\DigiForum_BE\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|c:\\users\\jinhyuk\\downloads\\digiforum_nhom1\\digiforum_be\\digiforum_be\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|solutionrelative:digiforum_be\\models\\errorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ErrorViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\JinHyuk\\Downloads\\DigiForum_Nhom1\\DigiForum_BE\\DigiForum_BE\\Models\\ErrorViewModel.cs",
+              "RelativeDocumentMoniker": "DigiForum_BE\\Models\\ErrorViewModel.cs",
+              "ToolTip": "C:\\Users\\JinHyuk\\Downloads\\DigiForum_Nhom1\\DigiForum_BE\\DigiForum_BE\\Models\\ErrorViewModel.cs",
+              "RelativeToolTip": "DigiForum_BE\\Models\\ErrorViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-05T13:41:27.575Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
