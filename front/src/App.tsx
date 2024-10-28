@@ -1,11 +1,12 @@
 import './App.css'
-import Home from './features/homepage/hooks/home'
-
+// import Home from './features/homepage/components/home'
+import LoginLayout from './features/login/components/loginLayout/loginLayout'
 
 function App() {
   return (
-    <><>
-    </><Home/></>
+    <>
+      <LoginLayout />
+    </>
   )
 }
 
