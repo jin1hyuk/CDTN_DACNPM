@@ -1,0 +1,22 @@
+﻿@model DigiForum_BE.Models.User
+
+<h2>Đăng ký</h2>
+<form asp-action="Signup" method="post">
+    <div>
+        <label for="Name">Tên</label>
+        <input type="text" id="Name" name="Name" required />
+    </div>
+    <div>
+        <label for="Email">Email</label>
+        <input type="email" id="Email" name="Email" required />
+    </div>
+    <div>
+        <label for="Password">Mật khẩu</label>
+        <input type="password" id="Password" name="Password" required />
+    </div>
+    <div>
+        <label for="Roles">Roles</label>
+        <input type="text" id="Roles" name="Roles" required />
+    </div>
+    <button type="submit">Đăng ký</button>
+</form>

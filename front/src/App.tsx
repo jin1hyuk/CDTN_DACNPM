@@ -1,9 +1,11 @@
 import './App.css'
+import LoginForm from './loginForm/components/LoginForm'
 
 function App() {
   return (
     <>
-    component</>
+      <LoginForm />
+    </>
   )
 }
 

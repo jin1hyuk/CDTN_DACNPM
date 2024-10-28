@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\JinHyuk\\Downloads\\DigiForum_Nhom1\\DigiForum_BE\\DigiForum_BE\\DigiForum_BE.csproj": {}
+    "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\DigiForum_BE.csproj": {}
   },
   "projects": {
-    "C:\\Users\\JinHyuk\\Downloads\\DigiForum_Nhom1\\DigiForum_BE\\DigiForum_BE\\DigiForum_BE.csproj": {
+    "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\DigiForum_BE.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\JinHyuk\\Downloads\\DigiForum_Nhom1\\DigiForum_BE\\DigiForum_BE\\DigiForum_BE.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\DigiForum_BE.csproj",
         "projectName": "DigiForum_BE",
-        "projectPath": "C:\\Users\\JinHyuk\\Downloads\\DigiForum_Nhom1\\DigiForum_BE\\DigiForum_BE\\DigiForum_BE.csproj",
-        "packagesPath": "C:\\Users\\JinHyuk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\JinHyuk\\Downloads\\DigiForum_Nhom1\\DigiForum_BE\\DigiForum_BE\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\DigiForum_BE.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\JinHyuk\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,6 +22,8 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "http://10.10.10.220:8090/v3/index.json": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -45,6 +47,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.10, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.8, )"
@@ -58,6 +64,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.8, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.9.0, )"
             }
           },
           "imports": [
