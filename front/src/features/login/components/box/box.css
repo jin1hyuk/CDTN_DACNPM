@@ -1,0 +1,6 @@
+.box{
+    height: 96%;
+    width: 85%;
+    border-radius: 10px;
+    background: linear-gradient(157.46deg, #F2B4B4 23.11%, rgba(225, 202, 255, 0.69) 55.55%, rgba(202, 239, 255, 0.47) 79.51%, rgba(251, 202, 255, 0.32) 100.93%);
+}
