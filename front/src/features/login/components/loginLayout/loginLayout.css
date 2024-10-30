@@ -1,13 +1,119 @@
-.container{
-    height: 100vh;
-    width: 100%;
-    background-color: #202433;
+/* Main container */
+.container {
     display: flex;
+    width: 200%;
+    height: 100vh;
+    background-color: #1a1a2e;
 }
-.container > div {
-    width: 50%;
-    height: 100%;
+
+/* Left info section */
+.info {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 100px;
+}
+
+.infoContainer {
+    background-color: #ffb3b3;
+    border-radius: 10px;
+    padding: 100px;
+    color: #333;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    max-width: 400px;
+    width: 100%;
+}
+
+.title {
+    font-size: 28px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.description {
+    margin-bottom: 80px;
+    text-align: center;
+}
+
+.card {
+    background-color: #333;
+    color: #fff;
+    padding: 100px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cardTitle,
+.cardText {
+    margin: 0;
+}
+
+/* Login form section */
+.loginForm {
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.formContainer {
+    background-color: #2a2a44;
+    border-radius: 10px;
+    padding: 100px;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 600px;
+}
+
+.formTitle {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
+.input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    background-color: #333;
+    border: 1px solid #555;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.link {
+    color: #bbb;
+    text-decoration: none;
+}
+
+.loginBtn {
+    background-color: #555;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+.createAccount {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.error {
+    color: red;
+    text-align: center;
+    margin-bottom: 15px;
 }

@@ -1,13 +1,7 @@
-import React, { useState } from 'react';
-import './Home.css'; // Assuming you save the styles in a separate CSS file
+import React from 'react';
+import './Home.css';
 
 const Home: React.FC = () => {
-  const [activeUser, setActiveUser] = useState<string | null>(null);
-
-  const handleUserClick = (username: string) => {
-    setActiveUser(username); // Set the clicked user as active
-  };
-
   return (
     <div className="body">
       {/* Top Navigation Bar */}
@@ -24,6 +18,10 @@ const Home: React.FC = () => {
           <a href="#">Community</a>
           <a href="#">Leaderboards</a>
         </div>
+        <div className="icons">
+          <span>&#128276;</span>
+          <span>&#128172;</span>
+        </div>
       </div>
 
       {/* Main Content Container */}
@@ -31,16 +29,34 @@ const Home: React.FC = () => {
         {/* Left Sidebar */}
         <div className="sidebar">
           <ul className="menu">
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Your Threads</a></li>
-            <li><a href="#">Saved</a></li>
+            <li>
+              <a href="#">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/user.png" alt="Profile Icon" />
+                Profile
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/document.png" alt="Your Threads Icon" />
+                Your Threads
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <img src="https://img.icons8.com/ios-filled/50/ffffff/bookmark.png" alt="Saved Icon" />
+                Saved
+              </a>
+            </li>
           </ul>
+
+          {/* Leaderboard Section */}
           <div className="leaderboard">
             <h2>Leaderboard</h2>
             <ul>
               <li><span>User1</span><span className="score">100</span></li>
               <li><span>User2</span><span className="score">90</span></li>
               <li><span>User3</span><span className="score">80</span></li>
+              <li><span>User4</span><span className="score">70</span></li>
             </ul>
             <a href="#" className="see-all-button">See All Leaderboards</a>
           </div>
@@ -49,7 +65,14 @@ const Home: React.FC = () => {
         {/* Main Content Area */}
         <div className="main-content">
           <h1>Welcome to DigiForum</h1>
-          <div className="post-card">Post content goes here...</div>
+          <div className="post-card">
+            <h2>Post Title</h2>
+            <p>Post content goes here...</p>
+          </div>
+          <div className="post-card">
+            <h2>Another Post Title</h2>
+            <p>More content goes here...</p>
+          </div>
         </div>
 
         {/* Right Sidebar */}
@@ -59,16 +82,27 @@ const Home: React.FC = () => {
           </div>
           <div className="user-list">
             <h2>List of Users</h2>
-            {['User1', 'User2', 'User3', 'User4', 'User5'].map((username) => (
-              <div
-                key={username}
-                className={`user ${activeUser === username ? 'active' : ''}`}
-                onClick={() => handleUserClick(username)}
-              >
-                <span>{username}</span>
-                <span className="faint-label">{username.toLowerCase()}</span>
-              </div>
-            ))}
+            <div className="user">
+              <div className="avatar"></div>
+              <span>User1</span>
+            </div>
+            <div className="user">
+              <div className="avatar"></div>
+              <span>User2</span>
+            </div>
+            <div className="user">
+              <div className="avatar"></div>
+              <span>User3</span>
+            </div>
+            <div className="user">
+              <div className="avatar"></div>
+              <span>User4</span>
+            </div>
+            <div className="user">
+              <div className="avatar"></div>
+              <span>User5</span>
+            </div>
+            <a href="#" className="see-more-button">See More</a>
           </div>
         </div>
       </div>
