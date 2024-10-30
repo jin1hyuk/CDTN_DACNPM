@@ -21,8 +21,9 @@ namespace DigiForum_BE.Services
                 EnableSsl = true,
                 Credentials = new NetworkCredential(
                     _configuration["EmailSettings:SenderEmail"],
-                    _configuration["EmailSettings:Password"])
+                    _configuration["EmailSettings:Password"]) 
             };
+
 
             var mailMessage = new MailMessage
             {

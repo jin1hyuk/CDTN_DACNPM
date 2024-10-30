@@ -3,32 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|c:\\users\\admin\\downloads\\cdtn_dacnpm\\digiforum_be\\digiforum_be\\controllers\\postcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|solutionrelative:digiforum_be\\controllers\\postcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|c:\\users\\admin\\downloads\\cdtn_dacnpm\\digiforum_be\\digiforum_be\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|solutionrelative:digiforum_be\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|c:\\users\\admin\\downloads\\cdtn_dacnpm\\digiforum_be\\digiforum_be\\models\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|solutionrelative:digiforum_be\\models\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|c:\\users\\admin\\downloads\\cdtn_dacnpm\\digiforum_be\\digiforum_be\\models\\post.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|solutionrelative:digiforum_be\\models\\post.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|c:\\users\\admin\\downloads\\cdtn_dacnpm\\digiforum_be\\digiforum_be\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|solutionrelative:digiforum_be\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|c:\\users\\admin\\downloads\\cdtn_dacnpm\\digiforum_be\\digiforum_be\\views\\auth\\signup.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|solutionrelative:digiforum_be\\views\\auth\\signup.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|c:\\users\\admin\\downloads\\cdtn_dacnpm\\digiforum_be\\digiforum_be\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|solutionrelative:digiforum_be\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|c:\\users\\admin\\downloads\\cdtn_dacnpm\\digiforum_be\\digiforum_be\\services\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|solutionrelative:digiforum_be\\services\\emailservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|c:\\users\\admin\\downloads\\cdtn_dacnpm\\digiforum_be\\digiforum_be\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|solutionrelative:digiforum_be\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|c:\\users\\admin\\downloads\\cdtn_dacnpm\\digiforum_be\\digiforum_be\\services\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -37,6 +25,22 @@
     {
       "AbsoluteMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|c:\\users\\admin\\downloads\\cdtn_dacnpm\\digiforum_be\\digiforum_be\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|solutionrelative:digiforum_be\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|c:\\users\\admin\\downloads\\cdtn_dacnpm\\digiforum_be\\digiforum_be\\models\\post.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|solutionrelative:digiforum_be\\models\\post.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|c:\\users\\admin\\downloads\\cdtn_dacnpm\\digiforum_be\\digiforum_be\\controllers\\postcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|solutionrelative:digiforum_be\\controllers\\postcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|c:\\users\\admin\\downloads\\cdtn_dacnpm\\digiforum_be\\digiforum_be\\models\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|solutionrelative:digiforum_be\\models\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|c:\\users\\admin\\downloads\\cdtn_dacnpm\\digiforum_be\\digiforum_be\\views\\auth\\signup.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|solutionrelative:digiforum_be\\views\\auth\\signup.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{971D39A2-8745-4F12-A019-717F03AE76B4}|DigiForum_BE\\DigiForum_BE.csproj|c:\\users\\admin\\downloads\\cdtn_dacnpm\\digiforum_be\\digiforum_be\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -50,11 +54,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Models\\User.cs",
               "RelativeDocumentMoniker": "DigiForum_BE\\Models\\User.cs",
@@ -67,67 +71,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Models\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "DigiForum_BE\\Models\\AppDbContext.cs",
-              "ToolTip": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Models\\AppDbContext.cs",
-              "RelativeToolTip": "DigiForum_BE\\Models\\AppDbContext.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAuAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-30T09:05:22.235Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PostController.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Controllers\\PostController.cs",
-              "RelativeDocumentMoniker": "DigiForum_BE\\Controllers\\PostController.cs",
-              "ToolTip": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Controllers\\PostController.cs",
-              "RelativeToolTip": "DigiForum_BE\\Controllers\\PostController.cs",
-              "ViewState": "AQIAABsAAAAAAAAAAAAAABwAAAAcAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-30T09:03:32.175Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Post.cs",
-              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Models\\Post.cs",
-              "RelativeDocumentMoniker": "DigiForum_BE\\Models\\Post.cs",
-              "ToolTip": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Models\\Post.cs",
-              "RelativeToolTip": "DigiForum_BE\\Models\\Post.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAFAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-30T08:59:18.653Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Signup.cshtml",
-              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Views\\Auth\\Signup.cshtml",
-              "RelativeDocumentMoniker": "DigiForum_BE\\Views\\Auth\\Signup.cshtml",
-              "ToolTip": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Views\\Auth\\Signup.cshtml",
-              "RelativeToolTip": "DigiForum_BE\\Views\\Auth\\Signup.cshtml",
+              "DocumentIndex": 1,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "DigiForum_BE\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\appsettings.Development.json",
+              "RelativeToolTip": "DigiForum_BE\\appsettings.Development.json",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-30T08:37:07.242Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\appsettings.json",
-              "RelativeDocumentMoniker": "DigiForum_BE\\appsettings.json",
-              "ToolTip": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\appsettings.json",
-              "RelativeToolTip": "DigiForum_BE\\appsettings.json",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAAA4AAAATAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-10-30T08:33:54.738Z",
+              "WhenOpened": "2024-10-30T10:26:02.777Z",
               "EditorCaption": ""
             },
             {
@@ -148,55 +100,118 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 7,
+              "Title": "PostController.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Controllers\\PostController.cs",
+              "RelativeDocumentMoniker": "DigiForum_BE\\Controllers\\PostController.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Controllers\\PostController.cs",
+              "RelativeToolTip": "DigiForum_BE\\Controllers\\PostController.cs",
+              "ViewState": "AQIAADcAAAAAAAAAAAAgwBwAAAAcAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T09:03:32.175Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Post.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Models\\Post.cs",
+              "RelativeDocumentMoniker": "DigiForum_BE\\Models\\Post.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Models\\Post.cs",
+              "RelativeToolTip": "DigiForum_BE\\Models\\Post.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAwAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T08:59:18.653Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\appsettings.json",
+              "RelativeDocumentMoniker": "DigiForum_BE\\appsettings.json",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\appsettings.json",
+              "RelativeToolTip": "DigiForum_BE\\appsettings.json",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAAeAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2024-10-30T08:33:54.738Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "DigiForum_BE\\Controllers\\AuthController.cs",
               "ToolTip": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Controllers\\AuthController.cs",
               "RelativeToolTip": "DigiForum_BE\\Controllers\\AuthController.cs",
-              "ViewState": "AQIAADUAAAAAAAAAAAAmwD8AAAANAAAA",
+              "ViewState": "AQIAABMAAAAAAAAAAAAgwBQAAABiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-28T04:01:34.853Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 2,
               "Title": "EmailService.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Services\\EmailService.cs",
               "RelativeDocumentMoniker": "DigiForum_BE\\Services\\EmailService.cs",
               "ToolTip": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Services\\EmailService.cs",
               "RelativeToolTip": "DigiForum_BE\\Services\\EmailService.cs",
-              "ViewState": "AQIAABIAAAAAAAAAAAAowBsAAAANAAAA",
+              "ViewState": "AQIAAAcAAAAAAAAAAAAIwBcAAAA+AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-30T08:40:44.547Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 4,
               "Title": "AuthService.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Services\\AuthService.cs",
               "RelativeDocumentMoniker": "DigiForum_BE\\Services\\AuthService.cs",
               "ToolTip": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Services\\AuthService.cs",
               "RelativeToolTip": "DigiForum_BE\\Services\\AuthService.cs",
-              "ViewState": "AQIAADcAAAAAAAAAAAAiwFcAAAAAAAAA",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAAACgAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-28T08:07:50.359Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Program.cs",
               "RelativeDocumentMoniker": "DigiForum_BE\\Program.cs",
               "ToolTip": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Program.cs",
               "RelativeToolTip": "DigiForum_BE\\Program.cs",
-              "ViewState": "AQIAAAMAAAAAAAAAAAAAABAAAAArAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAuAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-28T03:20:42.049Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Signup.cshtml",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Views\\Auth\\Signup.cshtml",
+              "RelativeDocumentMoniker": "DigiForum_BE\\Views\\Auth\\Signup.cshtml",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Views\\Auth\\Signup.cshtml",
+              "RelativeToolTip": "DigiForum_BE\\Views\\Auth\\Signup.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-30T08:37:07.242Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Models\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "DigiForum_BE\\Models\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\Models\\AppDbContext.cs",
+              "RelativeToolTip": "DigiForum_BE\\Models\\AppDbContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAuAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-30T09:05:22.235Z"
             }
           ]
         }

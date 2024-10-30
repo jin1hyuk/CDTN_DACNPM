@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DigiForum_BE")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c02d72b654948a464080dc915214ff4a8d2166cf")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ed4cff3ebe35bcb11fcd0f298a52b0d57371a6cc")]
 [assembly: System.Reflection.AssemblyProductAttribute("DigiForum_BE")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DigiForum_BE")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

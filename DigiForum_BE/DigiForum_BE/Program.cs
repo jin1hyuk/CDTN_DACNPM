@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddTransient<EmailService>();
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontendApp",

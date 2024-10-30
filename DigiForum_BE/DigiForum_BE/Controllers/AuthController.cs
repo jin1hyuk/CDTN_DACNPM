@@ -14,10 +14,11 @@ namespace DigiForum_BE.Controllers
         private readonly AuthService _authService;
         private readonly EmailService _emailService;
 
-        public AuthController(AppDbContext dbContext, AuthService authService)
+        public AuthController(AppDbContext dbContext, AuthService authService, EmailService emailService)
         {
             _ctx = dbContext;
             _authService = authService;
+            _emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
         }
 
         [HttpPost("signup")]
@@ -51,6 +52,7 @@ namespace DigiForum_BE.Controllers
             var token = _authService.GenerateToken(user);
             return Ok(new { token });
         }
+        private static string _currentVerificationCode; // Biến tĩnh để lưu mã xác nhận hiện tại
 
         [HttpPost("forgot-password")]
         [AllowAnonymous]
@@ -62,17 +64,28 @@ namespace DigiForum_BE.Controllers
             {
                 return BadRequest("Email không tồn tại trong hệ thống.");
             }
-            var token = _authService.GeneratePasswordResetToken(user);
 
-            var resetLink = Url.Action("ResetPassword", "Auth", new { token, email = user.Email }, Request.Scheme);
+            // Tạo mã xác nhận ngẫu nhiên
+            _currentVerificationCode = GenerateRandomCode(6);
 
-            await _emailService.SendEmailAsync(user.Email, "Đặt lại mật khẩu", $"Bấm vào đây để đặt lại mật khẩu: {resetLink}");
+            // Gửi mã xác nhận qua email
+            await _emailService.SendEmailAsync(user.Email, "Mã xác nhận đặt lại mật khẩu",
+                $"Mã xác nhận của bạn là: {_currentVerificationCode}");
 
-            return Ok("Email đặt lại mật khẩu đã được gửi.");
+            return Ok("Mã xác nhận đã được gửi đến email của bạn.");
+        }
+
+        // Phương thức tạo mã xác nhận ngẫu nhiên
+        private string GenerateRandomCode(int length)
+        {
+            var random = new Random();
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
 
         [HttpPost("reset-password")]
-        public async Task<IActionResult> ResetPassword(string token, string email, string newPassword)
+        public async Task<IActionResult> ResetPassword(string verificationCode, string email, string newPassword)
         {
             var user = await _ctx.Users.SingleOrDefaultAsync(u => u.Email == email);
 
@@ -81,19 +94,20 @@ namespace DigiForum_BE.Controllers
                 return BadRequest("Yêu cầu không hợp lệ.");
             }
 
-            var isValidToken = _authService.ValidatePasswordResetToken(token, email);
-
-            if (!isValidToken)
+            // Kiểm tra mã xác nhận
+            if (_currentVerificationCode != verificationCode)
             {
-                return Unauthorized("Token không hợp lệ hoặc đã hết hạn.");
+                return Unauthorized("Mã xác nhận không hợp lệ.");
             }
 
+            // Cập nhật mật khẩu
             user.Password = newPassword;
             await _ctx.SaveChangesAsync();
 
+            // Đặt lại mã xác nhận sau khi đặt lại mật khẩu thành công
+            _currentVerificationCode = null; // Reset mã xác nhận
+
             return Ok("Mật khẩu đã được đặt lại thành công.");
         }
-
-
     }
 }
