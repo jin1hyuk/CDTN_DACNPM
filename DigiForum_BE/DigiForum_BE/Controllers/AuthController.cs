@@ -12,6 +12,7 @@ namespace DigiForum_BE.Controllers
     {
         private readonly AppDbContext _ctx;
         private readonly AuthService _authService;
+        private readonly EmailService _emailService;
 
         public AuthController(AppDbContext dbContext, AuthService authService)
         {
@@ -50,5 +51,49 @@ namespace DigiForum_BE.Controllers
             var token = _authService.GenerateToken(user);
             return Ok(new { token });
         }
+
+        [HttpPost("forgot-password")]
+        [AllowAnonymous]
+        public async Task<IActionResult> ForgotPassword([FromBody] string email)
+        {
+            var user = await _ctx.Users.SingleOrDefaultAsync(u => u.Email == email);
+
+            if (user == null)
+            {
+                return BadRequest("Email không tồn tại trong hệ thống.");
+            }
+            var token = _authService.GeneratePasswordResetToken(user);
+
+            var resetLink = Url.Action("ResetPassword", "Auth", new { token, email = user.Email }, Request.Scheme);
+
+            await _emailService.SendEmailAsync(user.Email, "Đặt lại mật khẩu", $"Bấm vào đây để đặt lại mật khẩu: {resetLink}");
+
+            return Ok("Email đặt lại mật khẩu đã được gửi.");
+        }
+
+        [HttpPost("reset-password")]
+        public async Task<IActionResult> ResetPassword(string token, string email, string newPassword)
+        {
+            var user = await _ctx.Users.SingleOrDefaultAsync(u => u.Email == email);
+
+            if (user == null)
+            {
+                return BadRequest("Yêu cầu không hợp lệ.");
+            }
+
+            var isValidToken = _authService.ValidatePasswordResetToken(token, email);
+
+            if (!isValidToken)
+            {
+                return Unauthorized("Token không hợp lệ hoặc đã hết hạn.");
+            }
+
+            user.Password = newPassword;
+            await _ctx.SaveChangesAsync();
+
+            return Ok("Mật khẩu đã được đặt lại thành công.");
+        }
+
+
     }
 }
