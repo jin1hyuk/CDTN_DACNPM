@@ -1,81 +1,135 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using DigiForum_BE.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DigiForum_BE.Models;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace DigiForum_BE.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("api/posts")]
     public class PostController : ControllerBase
     {
-        private readonly AppDbContext _ctx;
+        private readonly AppDbContext _context;
 
         public PostController(AppDbContext context)
         {
-            _ctx = context;
+            _context = context;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreatePost([FromBody] Post post)
+        // Thêm bài đăng mới
+        [HttpPost("add")]
+        public async Task<IActionResult> AddPost([FromBody] Post post)
         {
-            post.CreatedAt = DateTime.Now;
-            post.UpdatedAt = DateTime.Now;
-            _ctx.Posts.Add(post);
-            await _ctx.SaveChangesAsync();
-            return Ok(post);
+            var user = await _context.Users.FindAsync(post.UserId);
+            if (user == null)
+            {
+                return BadRequest("User không tồn tại.");
+            }
+
+            post.UserId = post.UserId;
+            _context.Posts.Add(post);
+            await _context.SaveChangesAsync();
+
+            // Trả về bài đăng dưới dạng JSON kèm thông tin người đăng
+            var result = await _context.Posts
+                .Where(p => p.PostId == post.PostId)
+                .Include(p => p.User)
+                .Select(p => new
+                {
+                    p.PostId,
+                    p.Title,
+                    p.Content,
+                    p.ImagePath,
+                    p.CreatedAt,
+                    p.UpdatedAt,
+                    p.Status,
+                    User = new { p.User.Id, p.User.Name, p.User.Email }
+                })
+                .FirstOrDefaultAsync();
+
+            return Ok(result);
         }
 
-        [HttpGet("{postId}")]
-        public async Task<IActionResult> GetPostById(int postId)
+        // Lấy bài đăng theo UserId
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetPostsByUserId(Guid userId)
         {
-            var post = await _ctx.Posts.FindAsync(postId);
-            if (post == null) return NotFound("Bài đăng không tồn tại.");
+            var posts = await _context.Posts
+                .Where(p => p.UserId == userId)
+                .Include(p => p.User)
+                .Select(p => new
+                {
+                    p.PostId,
+                    p.Title,
+                    p.Content,
+                    p.ImagePath,
+                    p.CreatedAt,
+                    p.UpdatedAt,
+                    p.Status,
+                    User = new { p.User.Id, p.User.Name, p.User.Email }
+                })
+                .ToListAsync();
 
-            return Ok(new List<Post> { post }); // Trả về danh sách chứa bài đăng
+            return Ok(posts);
         }
 
-        [HttpPut("{postId}")]
-        public async Task<IActionResult> UpdatePost(int postId, [FromBody] Post post)
+        // Lấy tất cả bài đăng
+        [HttpGet("all")]
+        public async Task<IActionResult> GetAllPosts()
         {
-            if (postId != post.PostId) return BadRequest("ID bài đăng không khớp.");
+            var posts = await _context.Posts
+                .Include(p => p.User)
+                .Select(p => new
+                {
+                    p.PostId,
+                    p.Title,
+                    p.Content,
+                    p.ImagePath,
+                    p.CreatedAt,
+                    p.UpdatedAt,
+                    p.Status,
+                    User = new { p.User.Id, p.User.Name, p.User.Email }
+                })
+                .ToListAsync();
 
-            var existingPost = await _ctx.Posts.FindAsync(postId);
-            if (existingPost == null) return NotFound("Bài đăng không tồn tại.");
+            return Ok(posts);
+        }
+
+        // Cập nhật bài đăng
+        [HttpPut("update/{postId}")]
+        public async Task<IActionResult> UpdatePost(Guid postId, [FromBody] Post post)
+        {
+            var existingPost = await _context.Posts.FindAsync(postId);
+            if (existingPost == null)
+            {
+                return NotFound("Bài đăng không tồn tại.");
+            }
 
             existingPost.Title = post.Title;
             existingPost.Content = post.Content;
-            existingPost.UpdatedAt = DateTime.Now;
-            existingPost.Status = post.Status;
             existingPost.ImagePath = post.ImagePath;
+            existingPost.UpdatedAt = DateTime.UtcNow;
+            existingPost.Status = post.Status;
 
-            _ctx.Posts.Update(existingPost);
-            await _ctx.SaveChangesAsync();
-
-            return Ok("Update thành công"); // Trả về thông báo cập nhật thành công
+            await _context.SaveChangesAsync();
+            return Ok("Cập nhật bài đăng thành công.");
         }
 
-        [HttpDelete("{postId}")]
-        public async Task<IActionResult> DeletePost(int postId)
+        // Xóa bài đăng
+        [HttpDelete("delete/{postId}")]
+        public async Task<IActionResult> DeletePost(Guid postId)
         {
-            var post = await _ctx.Posts.FindAsync(postId);
-            if (post == null) return NotFound("Bài đăng không tồn tại.");
+            var post = await _context.Posts.FindAsync(postId);
+            if (post == null)
+            {
+                return NotFound("Bài đăng không tồn tại.");
+            }
 
-            _ctx.Posts.Remove(post);
-            await _ctx.SaveChangesAsync();
-
-            return Ok("Xóa thành công"); // Trả về thông báo xóa thành công
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetAllPosts()
-        {
-            var posts = await _ctx.Posts.ToListAsync();
-            return Ok(posts); // Trả về danh sách tất cả bài đăng
+            _context.Posts.Remove(post);
+            await _context.SaveChangesAsync();
+            return Ok("Xóa bài đăng thành công.");
         }
     }
 }
-
