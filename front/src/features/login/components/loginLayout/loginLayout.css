@@ -1,0 +1,170 @@
+/* Main container */
+.login-container {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background-color: #1a1a2e;
+}
+
+/* Left info section */
+.info {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    border-radius: 10px; /* Rounded corners */
+    margin: 20px; /* Margin to make it smaller */
+    max-width: 45%; /* Limit max width for a smaller look */
+}
+
+.infoContainer {
+    text-align: center;
+    color: #333;
+}
+
+.title {
+    font-size: 36px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+.description {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.card {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cardTitle {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.cardText {
+    font-size: 14px;
+    color: #ccc;
+}
+
+/* Login form section */
+.loginForm {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1a1a2e;
+}
+
+.formContainer {
+    background-color: #2a2a44;
+    border-radius: 10px;
+    padding: 40px;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.formTitle {
+    margin-bottom: 20px;
+    font-size: 26px;
+}
+
+.input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background-color: #333;
+    border: 1px solid #555;
+    color: #fff;
+    border-radius: 4px;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.link {
+    color: #bbb;
+    text-decoration: none;
+}
+
+.loginbut {
+    background-color: #555;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.createAccount {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.error {
+    color: red;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* Media Query for screens 1024px and below */
+@media (max-width: 1024px) {
+    .infoContainer {
+        padding: 15px;
+    }
+
+    .title {
+        font-size: 24px;
+    }
+
+    .description {
+        font-size: 14px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .formContainer {
+        padding: 30px;
+    }
+
+    .formTitle {
+        font-size: 22px;
+    }
+
+    .input {
+        padding: 10px;
+    }
+
+    .loginbut {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .createAccount {
+        font-size: 14px;
+    }
+
+    .error {
+        font-size: 14px;
+    }
+}
