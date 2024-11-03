@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // Import Link
 import axios from 'axios';
 import './registerBox.css';
 
@@ -28,6 +28,8 @@ const RegisterBox: React.FC = () => {
 
             if (response.data.success) {
                 setMessage('Đăng ký thành công!');
+                // Có thể điều hướng đến trang đăng nhập sau khi đăng ký thành công
+                navigate('/login');
             } else {
                 setMessage(response.data.message || 'Đăng ký thất bại');
             }
@@ -38,10 +40,6 @@ const RegisterBox: React.FC = () => {
                 setMessage('Đã xảy ra lỗi, vui lòng thử lại');
             }
         }
-    };
-
-    const handleGoToLogin = () => {
-        navigate('/'); // Navigate to the LoginPage
     };
 
     return (
@@ -86,7 +84,7 @@ const RegisterBox: React.FC = () => {
                 </form>
                 <div className="login-link">
                     <span>Have an account? </span>
-                    <span onClick={handleGoToLogin} className="login-link-text">Login</span>
+                    <Link to="/login" className="login-link-text">Login</Link> {/* Sử dụng Link */}
                 </div>
             </div>
         </div>

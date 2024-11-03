@@ -35,8 +35,28 @@ const LoginPage: React.FC = () => {
         navigate('/forgot-password');
     };
 
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        try {
+            const response = await axios.post('https://api.example.com/login', {
+                email,
+                password,
+            });
+
+            if (response.data.success) {
+                // Navigate to HomeUser on successful login
+                navigate('/home-user');
+            } else {
+                setError('Invalid credentials. Please try again.');
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            setError('An error occurred during login.');
+        }
+    };
+
     return (
-        <div className="container">
+        <div className="login-container">
             <div className="info">
                 <div className="infoContainer">
                     <h1 className="title">DigiForum.IO</h1>
@@ -51,7 +71,7 @@ const LoginPage: React.FC = () => {
                 <div className="formContainer">
                     <h2 className="formTitle">Login</h2>
                     {error && <p className="error">{error}</p>}
-                    <form>
+                    <form onSubmit={handleSubmit}>
                         <input
                             type="email"
                             placeholder="Email"
@@ -72,7 +92,7 @@ const LoginPage: React.FC = () => {
                             <label><input type="checkbox" /> Remember me</label>
                             <a href="#" onClick={handleForgotPassword} className="link">Forgot Password?</a>
                         </div>
-                        <button type="submit" className="loginBtn">Login</button>
+                        <button type="submit" className="loginbut">Login</button>
                     </form>
                     <div className="createAccount">
                         Don’t have an account? <Link to="/register" className="link">Create one!</Link>

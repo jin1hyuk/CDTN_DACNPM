@@ -1,9 +1,22 @@
 import React from 'react';
 import './Home.css';
+import { Link } from 'react-router-dom';
 
 const Home: React.FC = () => {
+  const users = [
+    { name: 'User1', email: 'user1@example.com' },
+    { name: 'User2', email: 'user2@example.com' },
+    { name: 'User3', email: 'user3@example.com' },
+  ];
+
+  const leaderboard = [
+    { name: 'User1', score: 100, email: 'user1@example.com' },
+    { name: 'User2', score: 90, email: 'user2@example.com' },
+    { name: 'User3', score: 80, email: 'user3@example.com' },
+  ];
+
   return (
-    <div className="body">
+    <div className="home-body">
       {/* Top Navigation Bar */}
       <div className="navbar">
         <div className="logo">DigiForum.io</div>
@@ -11,12 +24,14 @@ const Home: React.FC = () => {
           <input type="text" placeholder="Search..." id="search-input" />
           <button onClick={() => console.log("Searching...")}>&#128269;</button>
         </div>
-        <div className="nav-links">
-          <a href="#">Home</a>
-          <a href="#">About</a>
-          <a href="#">Threads</a>
-          <a href="#">Community</a>
-          <a href="#">Leaderboards</a>
+        <div className="bgr-nav-links">
+          <div className="nav-links">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Threads</a>
+            <a href="#">Community</a>
+            <a href="#">Leaderboards</a>
+          </div>
         </div>
         <div className="icons">
           <span>&#128276;</span>
@@ -53,10 +68,14 @@ const Home: React.FC = () => {
           <div className="leaderboard">
             <h2>Leaderboard</h2>
             <ul>
-              <li><span>User1</span><span className="score">100</span></li>
-              <li><span>User2</span><span className="score">90</span></li>
-              <li><span>User3</span><span className="score">80</span></li>
-              <li><span>User4</span><span className="score">70</span></li>
+              {leaderboard.map((user, index) => (
+                <li key={index}>
+                  <div className="leaderboard-item">
+                    <span>{user.name}</span>
+                    <div className="email">{user.email}</div> {/* Email nằm dưới tên người dùng */}
+                  </div>
+                </li>
+              ))}
             </ul>
             <a href="#" className="see-all-button">See All Leaderboards</a>
           </div>
@@ -78,30 +97,22 @@ const Home: React.FC = () => {
         {/* Right Sidebar */}
         <div className="right-sidebar">
           <div className="login-button-container">
-            <button className="login-button">Login</button>
+            {/* Link to the login page */}
+            <Link to="/login">
+              <button className="login-button">Login</button>
+            </Link>
           </div>
           <div className="user-list">
             <h2>List of Users</h2>
-            <div className="user">
-              <div className="avatar"></div>
-              <span>User1</span>
-            </div>
-            <div className="user">
-              <div className="avatar"></div>
-              <span>User2</span>
-            </div>
-            <div className="user">
-              <div className="avatar"></div>
-              <span>User3</span>
-            </div>
-            <div className="user">
-              <div className="avatar"></div>
-              <span>User4</span>
-            </div>
-            <div className="user">
-              <div className="avatar"></div>
-              <span>User5</span>
-            </div>
+            {users.map((user, index) => (
+              <div className="user" key={index}>
+                <div className="avatar"></div>
+                <div>
+                  <span>{user.name}</span>
+                  <div className="email">{user.email}</div> {/* Email nằm dưới tên người dùng */}
+                </div>
+              </div>
+            ))}
             <a href="#" className="see-more-button">See More</a>
           </div>
         </div>

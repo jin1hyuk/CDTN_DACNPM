@@ -1,3 +1,4 @@
+/* Main container */
 .register-container {
     display: flex;
     width: 100%;
@@ -5,44 +6,46 @@
     align-items: center;
     justify-content: center;
     background-color: #1a1a2e;
+    padding: 20px; /* Thêm khoảng đệm để căn giữa tốt hơn */
 }
 
+/* Register form container */
 .register-form-container {
     background-color: #2a2a44;
-    border-radius: 10px;
-    padding: 80px;
+    border-radius: 12px; /* Tăng bo viền */
+    padding: 90px; /* Tăng padding cho form */
     color: #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    width: 80%;
-    max-width: 400px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Tăng độ bóng */
+    width: 85%;
+    max-width: 450px; /* Tăng tối đa chiều rộng */
     text-align: center;
 }
 
 .form-title {
-    margin-bottom: 20px;
-    font-size: 24px;
+    margin-bottom: 25px; /* Tăng khoảng cách phía dưới */
+    font-size: 26px; /* Tăng kích thước phông chữ */
 }
 
 .input {
     width: 100%;
-    padding: 12px;
-    margin: 8px 0;
+    padding: 14px; /* Tăng padding */
+    margin: 10px 0; /* Tăng khoảng cách giữa các ô đầu vào */
     background-color: #333;
     border: 1px solid #555;
     color: #fff;
-    border-radius: 4px;
+    border-radius: 6px; /* Tăng bo viền */
 }
 
 .register-btn {
     background-color: #555;
     color: white;
-    padding: 14px;
+    padding: 16px; /* Tăng padding */
     border: none;
-    border-radius: 5px;
+    border-radius: 6px; /* Tăng bo viền */
     cursor: pointer;
-    font-size: 16px;
-    width: 106.5%;
-    margin-top: 7px;
+    font-size: 18px; /* Tăng kích thước phông chữ */
+    width: 100%; /* Tăng chiều rộng để tràn nhẹ ra ngoài */
+    margin-top: 12px; /* Tăng khoảng cách phía trên */
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
@@ -52,19 +55,21 @@
 }
 
 .message {
-    margin-bottom: 15px;
+    margin-bottom: 20px; /* Tăng khoảng cách phía dưới */
     color: #ffb3b3;
+    font-size: 16px; /* Tăng kích thước phông chữ */
 }
 
 .login-link {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 25px; /* Tăng khoảng cách phía trên */
 }
 
 .login-link-text {
     color: #A296BD;
+    font-size: 16px; /* Tăng kích thước phông chữ */
     cursor: pointer;
     text-decoration: none;
     transition: color 0.3s ease;
@@ -72,4 +77,34 @@
 
 .login-link-text:hover {
     color: #8f78a2;
+}
+
+/* Media Query for screens 1024px and below */
+@media (max-width: 1024px) {
+    .register-form-container {
+        padding: 50px; /* Giảm padding cho màn hình nhỏ hơn */
+        width: 95%; /* Tăng chiều rộng để tối ưu cho màn hình nhỏ hơn */
+    }
+
+    .form-title {
+        font-size: 22px; /* Điều chỉnh kích thước phông chữ */
+    }
+
+    .input {
+        padding: 12px; /* Điều chỉnh padding */
+    }
+
+    .register-btn {
+        font-size: 16px; /* Điều chỉnh kích thước phông chữ */
+        padding: 14px; /* Điều chỉnh padding */
+        width: 105%; /* Giữ chiều rộng lớn hơn */
+    }
+
+    .message {
+        font-size: 14px; /* Điều chỉnh kích thước phông chữ */
+    }
+
+    .login-link-text {
+        font-size: 14px; /* Điều chỉnh kích thước phông chữ */
+    }
 }
