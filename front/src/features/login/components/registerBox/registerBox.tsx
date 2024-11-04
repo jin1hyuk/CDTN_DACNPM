@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom'; // Import Link
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import './registerBox.css';
 
@@ -28,16 +28,23 @@ const RegisterBox: React.FC = () => {
 
             if (response.data.success) {
                 setMessage('Đăng ký thành công!');
-                // Có thể điều hướng đến trang đăng nhập sau khi đăng ký thành công
                 navigate('/login');
             } else {
-                setMessage(response.data.message || 'Đăng ký thất bại');
+                if (response.data.message === 'Email already exists') {
+                    setMessage('Email đã tồn tại.');
+                } else {
+                    setMessage(response.data.message || 'Đăng ký thất bại');
+                }
             }
         } catch (error) {
-            if (axios.isAxiosError(error) && error.response?.status === 404) {
-                setMessage('Tài khoản đã tồn tại hoặc xảy ra lỗi');
-            } else {
-                setMessage('Đã xảy ra lỗi, vui lòng thử lại');
+            if (axios.isAxiosError(error)) {
+                if (error.response?.status === 404) {
+                    setMessage('Tài khoản đã tồn tại hoặc xảy ra lỗi');
+                } else if (error.response?.status === 409) { // Assuming your API returns 409 for email conflict
+                    setMessage('Email đã tồn tại.');
+                } else {
+                    setMessage('Đã xảy ra lỗi, vui lòng thử lại');
+                }
             }
         }
     };
@@ -84,7 +91,7 @@ const RegisterBox: React.FC = () => {
                 </form>
                 <div className="login-link">
                     <span>Have an account? </span>
-                    <Link to="/login" className="login-link-text">Login</Link> {/* Sử dụng Link */}
+                    <Link to="/login" className="login-link-text">Login</Link>
                 </div>
             </div>
         </div>
