@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\DigiForum_BE.csproj": {}
+    "E:\\hihi\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\DigiForum_BE.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\DigiForum_BE.csproj": {
+    "E:\\hihi\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\DigiForum_BE.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\DigiForum_BE.csproj",
+        "projectUniqueName": "E:\\hihi\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\DigiForum_BE.csproj",
         "projectName": "DigiForum_BE",
-        "projectPath": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\DigiForum_BE.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Downloads\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\obj\\",
+        "projectPath": "E:\\hihi\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\DigiForum_BE.csproj",
+        "packagesPath": "C:\\Users\\quang\\.nuget\\packages\\",
+        "outputPath": "E:\\hihi\\CDTN_DACNPM\\DigiForum_BE\\DigiForum_BE\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\quang\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,8 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
-          "http://10.10.10.220:8090/v3/index.json": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -36,11 +34,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -89,7 +82,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

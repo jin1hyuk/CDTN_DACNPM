@@ -1,0 +1,25 @@
+.cover-photo {
+  position: relative;
+  /* Để ảnh có thể được đặt ở vị trí tương đối */
+  width: 100%;
+  /* Đặt chiều rộng bằng 100% */
+  height: 200px;
+  /* Hoặc chiều cao mà bạn muốn */
+  overflow: hidden;
+  /* Ẩn bất kỳ phần nào của ảnh bìa vượt ra ngoài */
+
+  display: flex; /* Sử dụng Flexbox */
+  justify-content: center; /* Căn giữa theo chiều ngang */
+  align-items: center; /* Căn giữa theo chiều dọc */
+}
+
+.cover-photo__image {
+  /* position: absolute; */
+  /* Để cho phép di chuyển ảnh trong vùng chứa */
+  width: 100%;
+  /* Chiều rộng sẽ được điều chỉnh theo div chứa */
+  height: auto;
+  object-fit: none;
+  /* Cắt hoặc co giãn ảnh cho vừa với div */
+  /* cursor: grab; Hiển thị con trỏ như một tay cầm khi di chuột */
+}
