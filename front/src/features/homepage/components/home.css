@@ -1,4 +1,3 @@
-/* Global styles */
 * {
   margin: 0;
   padding: 0;
@@ -12,7 +11,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh; /* Ensure the body is at least the height of the viewport */
+}
+.container {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+  justify-content: center;
+  width: 100%;
+  min-height: calc(100vh - 70px); /* Ensure container height extends below the navbar */
+  margin-top: 70px; /* Add margin-top to prevent content from hiding under the navbar */
+  background-color: #1a1a2e; /* Same background as LoginPage */
 }
 
 /* Top Navigation Bar */
@@ -25,6 +33,10 @@
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #555;
+  position: fixed; /* Make the navbar fixed */
+  top: 0; /* Align to the top of the viewport */
+  left: 0; /* Align to the left of the viewport */
+  z-index: 1000; /* Ensure it appears above other elements */
 }
 
 .navbar .logo {
@@ -39,7 +51,7 @@
   align-items: center;
   max-width: 150px;
   flex: 1;
-  margin-left: 0px;
+  margin-right: 60%;
 }
 
 .navbar .search-bar input {
@@ -63,28 +75,6 @@
   cursor: pointer;
 }
 
-.navbar .nav-links {
-  display: flex;
-  align-items: center;
-  margin-left: 0px;
-}
-.bgr-nav-links{
-  background-color: #336699;
-  border-radius: 5px;
-}
-.navbar .nav-links a {
-  color: #FFF;
-  text-decoration: none;
-  font-size: 1em;
-  padding: 26px 25px;
-  transition: background-color 0.3s ease;
-  text-align: center;
-}
-
-.navbar .nav-links a:hover {
-  background-color: #1A5656;
-}
-
 .navbar .icons {
   display: flex;
   gap: 15px;
@@ -102,21 +92,17 @@
   transform: scale(1.2);
 }
 
-/* Container and layout styling */
-.container {
-  display: flex;
-  width: 100%;
-}
 
 /* Left Sidebar styling */
 .sidebar {
   width: 20%;
   padding: 25px;
   border: 1px solid #393960;
-  position: absolute;
-  top: 70px;
+  position: fixed; /* Fix the sidebar */
+  top: 70px; /* Space below the navbar */
   left: 0;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 70px); /* Full height minus navbar */
+  overflow-y: auto; /* Allow scrolling if content overflows */
 }
 
 .sidebar .menu {
@@ -124,7 +110,7 @@
 }
 
 .sidebar .menu li a {
-  font-size: 0.75em;
+  font-size: 1em; /* Increased font size */
   padding: 10px;
   text-decoration: none;
   color: #FFF;
@@ -138,30 +124,186 @@
   background-color: #393960;
 }
 
+.sidebar .menu li .icon {
+  font-size: 1.5em; /* Increased icon size */
+  margin-right: 10px; /* Spacing between icon and text */
+}
+
 /* Main content styling */
 .main-content {
   width: 62%;
+  margin-top: 60px;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  height: calc(100vh - 70px); /* Subtracting the navbar height */
-  overflow-y: auto;
-  /* border: 1px solid #393960; */ /* Xóa dòng này để bỏ viền */
+  align-items: flex-start;
+  min-height: 1000px; /* Set a minimum height for the main content */
+  margin-left: 20%; /* Ensure main content doesn't overlap the left sidebar */
+  margin-right: 20%; /* Ensure main content doesn't overlap the right sidebar */
 }
 
-.main-content h1 {
+/* Post styling */
+.post {
+  background-color: #3D3D56;
+  border-radius: 8px;
+  padding: 50px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  width: 80%;
+  margin-left: 10%;
+  max-width: 800px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Initial shadow */
+  transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transition for shadow */
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Space between header and content */
+}
+
+.post-header .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #555;
+  margin-right: 10px;
+}
+
+.username {
   color: #FFF;
+  font-weight: bold;
+}
+
+/* Post content */
+.post-content {
+  color: #FFF;
+  margin-top: 25px;
+  margin-bottom: 25px; /* Space between content and actions */
+}
+/* Post title styling */
+.post-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #FFF;
+  margin-bottom: 5px;
+}
+
+/* Post actions styling */
+.post-actions {
+  display: flex;
+  gap: 15px; /* Space between action buttons */
+}
+
+.action-button {
+  background: none;
+  border: none;
+  color: #FFF;
+  cursor: pointer;
+  font-size: 1em;
+  transition: color 0.3s ease;
+}
+.action-button {
+  background: none;
+  border: none;
+  color: #FFF;
+  cursor: pointer;
+  font-size: 1em;
+  transition: color 0.3s ease;
+}
+.action-button:hover {
+  color: #528B8B; /* Change color on hover */
+}
+.action-button.dislike {
+  color: #FF4D4D; /* Red for dislike */
+  margin-left: 10%;
+  margin-right: 10%;
+}
+.action-button.save {
+  color: #528B8B; /* Custom color for save button */
+  margin-left: 10%;
+  margin-right: 10%;
+  
+}
+.post:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Larger shadow on hover */
+  transform: translateY(-5px); /* Slight lift on hover */
+}
+
+/* Button styling */
+.action-button {
+  background-color: #528B8B;
+  color: #FFF;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-right: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+  background-color: #336699; /* Darker shade on hover */
+}
+
+
+/* Button styling */
+.action-button {
+  background-color: #528B8B;
+  color: #FFF;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-right: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+  background-color: #336699; /* Darker shade on hover */
+}
+
+.comments-section {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #555;
+}
+
+.comments {
   margin-bottom: 10px;
 }
 
-.post-card {
-  width: 100%;
-  background-color: #3D3D56;
-  padding: 15px;
-  border-radius: 8px;
-  margin-bottom: 15px;
+.comment {
   color: #FFF;
+  margin-bottom: 5px;
+}
+
+.comment-input {
+  display: flex;
+}
+
+.comment-input input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background-color: #3D3D56;
+  color: #FFF;
+}
+/* Updated avatar styling for square shape with rounded corners */
+.post-header .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px; /* Rounded corners */
+  background-color: #555;
+  margin-right: 10px;
+}
+
+/* Timestamp styling */
+.timestamp {
+  font-size: 0.8em;
+  color: rgba(255, 255, 255, 0.6); /* Faded color for timestamp */
+  margin-top: 2px;
 }
 
 /* Right Sidebar styling */
@@ -169,12 +311,12 @@
   width: 20%;
   padding: 20px;
   border: 0.5px solid #393960;
-  position: absolute;
-  top: 70px;
+  position: fixed; /* Fix the sidebar */
+  top: 70px; /* Space below the navbar */
   right: 0;
-  height: calc(100vh - 70px);
+  height: calc(100vh - 70px); /* Full height minus navbar */
+  overflow-y: auto; /* Allow scrolling if content overflows */
 }
-
 .login-button-container {
   background-color: #393960;
   padding: 20px;
@@ -300,18 +442,17 @@
 .see-all-button:hover {
   background-color: #224466;
 }
+
 .user-list .user .email {
   color: rgba(255, 255, 255, 0.6); /* Màu chữ mờ */
   font-size: 0.8em; /* Kích thước chữ nhỏ hơn */
 }
-
 
 .email {
   color: rgba(255, 255, 255, 0.6); /* Màu chữ mờ */
   font-size: 0.8em; /* Kích thước chữ nhỏ hơn */
   margin-top: 4px; /* Thêm khoảng cách giữa tên và email */
 }
-
 
 /* Media query for desktop screens */
 @media screen and (min-width: 1024px) {
@@ -330,4 +471,3 @@
     width: 80%;
   }
 }
-

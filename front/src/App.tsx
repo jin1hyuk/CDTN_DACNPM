@@ -8,10 +8,11 @@ function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Home />} /> {/* Home route */}
-                <Route path="/login" element={<LoginPage />} /> {/* Login route */}
-                <Route path="/register" element={<RegisterBox />} /> {/* Registration route */}
+                <Route path="/" element={<LoginPage />} /> {/* Trang đăng nhập */}
+                <Route path="/login" element={<LoginPage />} /> {/* Trang đăng nhập */}
+                <Route path="/register" element={<RegisterBox />} /> {/* Trang đăng ký */}
                 <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+                <Route path="/home" element={<Home />} /> {/* Trang chính */}
             </Routes>
         </Router>
     );

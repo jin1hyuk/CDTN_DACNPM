@@ -1,19 +1,70 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Home.css';
 import { Link } from 'react-router-dom';
 
 const Home: React.FC = () => {
   const users = [
-    { name: 'User1', email: 'user1@example.com' },
-    { name: 'User2', email: 'user2@example.com' },
-    { name: 'User3', email: 'user3@example.com' },
+    { name: 'User1' },
+    { name: 'User2' },
+    { name: 'User3' },
   ];
 
   const leaderboard = [
-    { name: 'User1', score: 100, email: 'user1@example.com' },
-    { name: 'User2', score: 90, email: 'user2@example.com' },
-    { name: 'User3', score: 80, email: 'user3@example.com' },
+    { name: 'User1', score: 100 },
+    { name: 'User2', score: 90 },
+    { name: 'User3', score: 80 },
   ];
+
+  const posts = [
+    {
+      id: 1,
+      username: 'User1',
+      content: 'This is the first post content. It can be a bit longer to demonstrate the layout.',
+      timestamp: '2 hours ago',
+      comments: [],
+    },
+    {
+      id: 2,
+      username: 'User2',
+      content: 'Here is another post. It can also contain more text.',
+      timestamp: '5 hours ago',
+      comments: [],
+    },
+    {
+      id: 3,
+      username: 'User3',
+      content: 'This is the third post. Let’s make this one a bit longer to see how it looks with more text.',
+      timestamp: '1 day ago',
+      comments: [],
+    },
+    {
+      id: 4,
+      username: 'User1',
+      content: 'Finally, this is the fourth post. It’s nice to add more content here for the example.',
+      timestamp: '2 days ago',
+      comments: [],
+    },
+  ];
+
+  const [postsState, setPostsState] = useState(posts);
+
+  const toggleComments = (postId: number) => {
+    setPostsState((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === postId ? { ...post, showComments: !post.showComments } : post
+      )
+    );
+  };
+
+  const addComment = (postId: number, comment: string) => {
+    setPostsState((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === postId
+          ? { ...post, comments: [...post.comments, comment] }
+          : post
+      )
+    );
+  };
 
   return (
     <div className="home-body">
@@ -24,18 +75,8 @@ const Home: React.FC = () => {
           <input type="text" placeholder="Search..." id="search-input" />
           <button onClick={() => console.log("Searching...")}>&#128269;</button>
         </div>
-        <div className="bgr-nav-links">
-          <div className="nav-links">
-            <a href="#">Home</a>
-            <a href="#">About</a>
-            <a href="#">Threads</a>
-            <a href="#">Community</a>
-            <a href="#">Leaderboards</a>
-          </div>
-        </div>
         <div className="icons">
-          <span>&#128276;</span>
-          <span>&#128172;</span>
+          <span> &#128276;</span>
         </div>
       </div>
 
@@ -46,19 +87,19 @@ const Home: React.FC = () => {
           <ul className="menu">
             <li>
               <a href="#">
-                <img src="https://img.icons8.com/ios-filled/50/ffffff/user.png" alt="Profile Icon" />
+                <span className="icon">&#128100;</span>
                 Profile
               </a>
             </li>
             <li>
               <a href="#">
-                <img src="https://img.icons8.com/ios-filled/50/ffffff/document.png" alt="Your Threads Icon" />
+                <span className="icon">&#128196;</span>
                 Your Threads
               </a>
             </li>
             <li>
               <a href="#">
-                <img src="https://img.icons8.com/ios-filled/50/ffffff/bookmark.png" alt="Saved Icon" />
+                <span className="icon">&#128278;</span>
                 Saved
               </a>
             </li>
@@ -72,7 +113,7 @@ const Home: React.FC = () => {
                 <li key={index}>
                   <div className="leaderboard-item">
                     <span>{user.name}</span>
-                    <div className="email">{user.email}</div> {/* Email nằm dưới tên người dùng */}
+                    <div className="score">{user.score}</div>
                   </div>
                 </li>
               ))}
@@ -83,21 +124,54 @@ const Home: React.FC = () => {
 
         {/* Main Content Area */}
         <div className="main-content">
-          <h1>Welcome to DigiForum</h1>
-          <div className="post-card">
-            <h2>Post Title</h2>
-            <p>Post content goes here...</p>
-          </div>
-          <div className="post-card">
-            <h2>Another Post Title</h2>
-            <p>More content goes here...</p>
-          </div>
+          {postsState.map((post) => (
+            <div className="post" key={post.id}>
+              <div className="post-header">
+                <div className="avatar"></div>
+                <div>
+                  <span className="username">{post.username}</span>
+                  <div className="timestamp">{post.timestamp}</div>
+                </div>
+              </div>
+              <div className="post-content">{post.content}</div>
+              <div className="post-actions">
+                <button className="action-button like">👍</button>
+                <button className="action-button dislike">👎</button>
+                <button className="action-button" onClick={() => toggleComments(post.id)}>💬</button>
+                <button className="action-button save">🔖</button>
+              </div>
+
+              {/* Comments Section */}
+              {post.showComments && (
+                <div className="comments-section">
+                  <div className="comments">
+                    {post.comments.map((comment, index) => (
+                      <div className="comment" key={index}>
+                        <span>{comment}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="comment-input">
+                    <input
+                      type="text"
+                      placeholder="Add a comment..."
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' && e.currentTarget.value) {
+                          addComment(post.id, e.currentTarget.value);
+                          e.currentTarget.value = ''; // Clear input after adding comment
+                        }
+                      }}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
         </div>
 
         {/* Right Sidebar */}
         <div className="right-sidebar">
           <div className="login-button-container">
-            {/* Link to the login page */}
             <Link to="/login">
               <button className="login-button">Login</button>
             </Link>
@@ -107,10 +181,7 @@ const Home: React.FC = () => {
             {users.map((user, index) => (
               <div className="user" key={index}>
                 <div className="avatar"></div>
-                <div>
-                  <span>{user.name}</span>
-                  <div className="email">{user.email}</div> {/* Email nằm dưới tên người dùng */}
-                </div>
+                <span>{user.name}</span>
               </div>
             ))}
             <a href="#" className="see-more-button">See More</a>

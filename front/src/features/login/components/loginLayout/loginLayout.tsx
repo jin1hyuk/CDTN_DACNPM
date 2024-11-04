@@ -11,13 +11,17 @@ const LoginPage: React.FC = () => {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('https://api.example.com/user-credentials', {
+            // Lấy danh sách người dùng từ API
+            const response = await axios.get('http://localhost:3000/users', {
                 params: { email }
             });
 
-            if (response.data.exists) {
-                setEmail(response.data.email);
-                setPassword(response.data.password);
+            // Tìm người dùng theo email
+            const user = response.data.find((user: { email: string }) => user.email === email);
+
+            if (user) {
+                setEmail(user.email);
+                setPassword(user.password);
                 setError('');
             } else {
                 setError('Tài khoản không tồn tại');
@@ -28,6 +32,7 @@ const LoginPage: React.FC = () => {
     };
 
     useEffect(() => {
+        // Gọi hàm fetchData để lấy dữ liệu người dùng
         fetchData();
     }, []);
 
@@ -38,20 +43,24 @@ const LoginPage: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post('https://api.example.com/login', {
-                email,
-                password,
+            // Kiểm tra thông tin đăng nhập
+            const response = await axios.get('http://localhost:3000/users', {
+                params: { email }
             });
 
-            if (response.data.success) {
-                // Navigate to HomeUser on successful login
-                navigate('/home-user');
+            const user = response.data.find((user: { email: string; password: string }) =>
+                user.email === email && user.password === password
+            );
+
+            if (user) {
+                // Chuyển hướng đến trang chính khi đăng nhập thành công
+                navigate('/home');
             } else {
-                setError('Invalid credentials. Please try again.');
+                setError('Tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại.');
             }
         } catch (error) {
             console.error('Login error:', error);
-            setError('An error occurred during login.');
+            setError('Đã xảy ra lỗi trong quá trình đăng nhập.');
         }
     };
 

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './forgotPasswordLayout.css';
 
 const ForgotPasswordPage: React.FC = () => {
@@ -12,7 +13,7 @@ const ForgotPasswordPage: React.FC = () => {
     };
 
     return (
-        <div className="container">
+        <div className="forgot-container">
             <div className="formContainer">
                 <h2 className="formTitle">Forgot Password</h2>
                 {message && <p className="message">{message}</p>}
@@ -28,6 +29,13 @@ const ForgotPasswordPage: React.FC = () => {
                     />
                     <button type="submit" className="resetBtn">Send Reset Link</button>
                 </form>
+
+                {/* Navigation Links */}
+                <div className="navigationLinks">
+                    <Link to="/login" className="navLink">Back to Login</Link>
+                    <span> | </span>
+                    <Link to="/register" className="navLink">Create an Account</Link>
+                </div>
             </div>
         </div>
     );
