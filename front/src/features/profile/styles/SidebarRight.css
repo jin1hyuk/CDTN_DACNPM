@@ -1,0 +1,14 @@
+.sidebar-right {
+    background-color: #33394F;
+    padding: 1rem;
+    width: 200px;
+    overflow-y: auto;
+}
+
+.sidebar-right ul {
+    list-style: none;
+}
+
+.sidebar-right li {
+    padding: 0.5rem 0;
+}

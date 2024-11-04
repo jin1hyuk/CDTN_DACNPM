@@ -1,0 +1,12 @@
+.profile-page {
+    display: flex; /* Đặt profile-page là flex container */
+    flex-direction: column; /* Cho phép các phần tử con sắp xếp theo cột */
+    height: 100vh; /* Đảm bảo chiều cao của trang chiếm toàn bộ viewport */
+    color: #FFFFFF;
+}
+  
+.profile-page__body {
+    display: flex; /* Đặt nội dung của trang là flex container */
+    flex: 1; /* Chiếm không gian còn lại */
+    overflow: hidden; /* Ẩn overflow cho container cha */  
+}

@@ -1,0 +1,5 @@
+/* ProfilePosts.css */
+.profile-posts {
+  padding: 20px;
+  overflow-y: auto;
+}
