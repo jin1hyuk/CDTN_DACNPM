@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
 import './registerBox.css';
 
 const RegisterBox: React.FC = () => {
@@ -11,7 +10,14 @@ const RegisterBox: React.FC = () => {
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
-    const handleRegister = async (e: React.FormEvent) => {
+    // Dữ liệu người dùng giả
+    const users = [
+        { name: "Nguyễn Văn A", email: "user1@example.com", password: "password123" },
+        { name: "Trần Thị B", email: "user2@example.com", password: "password456" },
+        { name: "Quản Trị Viên", email: "admin@example.com", password: "admin123" }
+    ];
+
+    const handleRegister = (e: React.FormEvent) => {
         e.preventDefault();
 
         if (password !== confirmPassword) {
@@ -19,34 +25,20 @@ const RegisterBox: React.FC = () => {
             return;
         }
 
-        try {
-            const response = await axios.post('YOUR_API_URL/register', {
-                name,
-                email,
-                password,
-            });
+        // Kiểm tra xem email đã tồn tại trong dữ liệu giả chưa
+        const existingUser = users.find(user => user.email === email);
 
-            if (response.data.success) {
-                setMessage('Đăng ký thành công!');
-                navigate('/login');
-            } else {
-                if (response.data.message === 'Email already exists') {
-                    setMessage('Email đã tồn tại.');
-                } else {
-                    setMessage(response.data.message || 'Đăng ký thất bại');
-                }
-            }
-        } catch (error) {
-            if (axios.isAxiosError(error)) {
-                if (error.response?.status === 404) {
-                    setMessage('Tài khoản đã tồn tại hoặc xảy ra lỗi');
-                } else if (error.response?.status === 409) { // Assuming your API returns 409 for email conflict
-                    setMessage('Email đã tồn tại.');
-                } else {
-                    setMessage('Đã xảy ra lỗi, vui lòng thử lại');
-                }
-            }
+        if (existingUser) {
+            setMessage('Email đã tồn tại.');
+            return;
         }
+
+        // Nếu không có lỗi, thêm người dùng mới vào dữ liệu giả (không thực sự lưu trữ)
+        users.push({ name, email, password });
+        setMessage('Đăng ký thành công!');
+
+        // Chuyển hướng đến trang đăng nhập
+        navigate('/login');
     };
 
     return (
@@ -83,7 +75,7 @@ const RegisterBox: React.FC = () => {
                         type="password"
                         placeholder="Confirm Password"
                         value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
+onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                         className="input"
                     />

@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Home.css';
-import { Link } from 'react-router-dom';
+import Navbar from './Navbar';
+import Sidebar from './Sidebar';
+import RightSidebar from './RightSidebar';
+import MainContent from './MainContent';
 
 const Home: React.FC = () => {
   const users = [
@@ -46,147 +49,13 @@ const Home: React.FC = () => {
     },
   ];
 
-  const [postsState, setPostsState] = useState(posts);
-
-  const toggleComments = (postId: number) => {
-    setPostsState((prevPosts) =>
-      prevPosts.map((post) =>
-        post.id === postId ? { ...post, showComments: !post.showComments } : post
-      )
-    );
-  };
-
-  const addComment = (postId: number, comment: string) => {
-    setPostsState((prevPosts) =>
-      prevPosts.map((post) =>
-        post.id === postId
-          ? { ...post, comments: [...post.comments, comment] }
-          : post
-      )
-    );
-  };
-
   return (
     <div className="home-body">
-      {/* Top Navigation Bar */}
-      <div className="navbar">
-        <div className="logo">DigiForum.io</div>
-        <div className="search-bar">
-          <input type="text" placeholder="Search..." id="search-input" />
-          <button onClick={() => console.log("Searching...")}>&#128269;</button>
-        </div>
-        <div className="icons">
-          <span> &#128276;</span>
-        </div>
-      </div>
-
-      {/* Main Content Container */}
+      <Navbar />
       <div className="container">
-        {/* Left Sidebar */}
-        <div className="sidebar">
-          <ul className="menu">
-            <li>
-              <a href="#">
-                <span className="icon">&#128100;</span>
-                Profile
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <span className="icon">&#128196;</span>
-                Your Threads
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <span className="icon">&#128278;</span>
-                Saved
-              </a>
-            </li>
-          </ul>
-
-          {/* Leaderboard Section */}
-          <div className="leaderboard">
-            <h2>Leaderboard</h2>
-            <ul>
-              {leaderboard.map((user, index) => (
-                <li key={index}>
-                  <div className="leaderboard-item">
-                    <span>{user.name}</span>
-                    <div className="score">{user.score}</div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-            <a href="#" className="see-all-button">See All Leaderboards</a>
-          </div>
-        </div>
-
-        {/* Main Content Area */}
-        <div className="main-content">
-          {postsState.map((post) => (
-            <div className="post" key={post.id}>
-              <div className="post-header">
-                <div className="avatar"></div>
-                <div>
-                  <span className="username">{post.username}</span>
-                  <div className="timestamp">{post.timestamp}</div>
-                </div>
-              </div>
-              <div className="post-content">{post.content}</div>
-              <div className="post-actions">
-                <button className="action-button like">👍</button>
-                <button className="action-button dislike">👎</button>
-                <button className="action-button" onClick={() => toggleComments(post.id)}>💬</button>
-                <button className="action-button save">🔖</button>
-              </div>
-
-              {/* Comments Section */}
-              {post.showComments && (
-                <div className="comments-section">
-                  <div className="comments">
-                    {post.comments.map((comment, index) => (
-                      <div className="comment" key={index}>
-                        <span>{comment}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="comment-input">
-                    <input
-                      type="text"
-                      placeholder="Add a comment..."
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter' && e.currentTarget.value) {
-                          addComment(post.id, e.currentTarget.value);
-                          e.currentTarget.value = ''; // Clear input after adding comment
-                        }
-                      }}
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* Right Sidebar */}
-        <div className="right-sidebar">
-          <div className="login-button-container">
-            <Link to="/login">
-              <button className="login-button">Login</button>
-            </Link>
-          </div>
-          <div className="user-list">
-            <h2>List of Users</h2>
-            {users.map((user, index) => (
-              <div className="user" key={index}>
-                <div className="avatar"></div>
-                <span>{user.name}</span>
-              </div>
-            ))}
-            <a href="#" className="see-more-button">See More</a>
-          </div>
-        </div>
+        <Sidebar leaderboard={leaderboard} />
+        <MainContent posts={posts} />
+        <RightSidebar users={users} />
       </div>
     </div>
   );

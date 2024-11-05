@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
 import './loginLayout.css';
 
 const LoginPage: React.FC = () => {
@@ -9,58 +8,26 @@ const LoginPage: React.FC = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    const fetchData = async () => {
-        try {
-            // Lấy danh sách người dùng từ API
-            const response = await axios.get('http://localhost:3000/users', {
-                params: { email }
-            });
-
-            // Tìm người dùng theo email
-            const user = response.data.find((user: { email: string }) => user.email === email);
-
-            if (user) {
-                setEmail(user.email);
-                setPassword(user.password);
-                setError('');
-            } else {
-                setError('Tài khoản không tồn tại');
-            }
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
-
-    useEffect(() => {
-        // Gọi hàm fetchData để lấy dữ liệu người dùng
-        fetchData();
-    }, []);
+    // Dữ liệu giả
+    const users = [
+        { email: "user1@example.com", password: "password123", fullName: "Nguyễn Văn A" },
+        { email: "user2@example.com", password: "password456", fullName: "Trần Thị B" },
+        { email: "admin@example.com", password: "admin123", fullName: "Quản Trị Viên" }
+    ];
 
     const handleForgotPassword = () => {
         navigate('/forgot-password');
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        try {
-            // Kiểm tra thông tin đăng nhập
-            const response = await axios.get('http://localhost:3000/users', {
-                params: { email }
-            });
+        const user = users.find(user => user.email === email && user.password === password);
 
-            const user = response.data.find((user: { email: string; password: string }) =>
-                user.email === email && user.password === password
-            );
-
-            if (user) {
-                // Chuyển hướng đến trang chính khi đăng nhập thành công
-                navigate('/home');
-            } else {
-                setError('Tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại.');
-            }
-        } catch (error) {
-            console.error('Login error:', error);
-            setError('Đã xảy ra lỗi trong quá trình đăng nhập.');
+        if (user) {
+            // Chuyển hướng đến trang chính khi đăng nhập thành công
+            navigate('/home');
+        } else {
+            setError('Tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại.');
         }
     };
 
@@ -78,8 +45,7 @@ const LoginPage: React.FC = () => {
             </div>
             <div className="loginForm">
                 <div className="formContainer">
-                    <h2 className="formTitle">Login</h2>
-                    {error && <p className="error">{error}</p>}
+                    <h2 className="formTitle">Login</h2>{error && <p className="error">{error}</p>}
                     <form onSubmit={handleSubmit}>
                         <input
                             type="email"
@@ -99,7 +65,7 @@ const LoginPage: React.FC = () => {
                         />
                         <div className="options">
                             <label><input type="checkbox" /> Remember me</label>
-                            <a href="#" onClick={handleForgotPassword} className="link">Forgot Password?</a>
+<a href="#" onClick={handleForgotPassword} className="link">Forgot Password?</a>
                         </div>
                         <button type="submit" className="loginbut">Login</button>
                     </form>

@@ -1,0 +1,37 @@
+
+/* Left Sidebar styling */
+.sidebar {
+    width: 20%;
+    padding: 25px;
+    border: 1px solid #393960;
+    position: fixed; /* Fix the sidebar */
+    top: 70px; /* Space below the navbar */
+    left: 0;
+    height: calc(100vh - 70px); /* Full height minus navbar */
+    overflow-y: auto; /* Allow scrolling if content overflows */
+  }
+  
+  .sidebar .menu {
+    list-style-type: none;
+  }
+  
+  .sidebar .menu li a {
+    font-size: 1em; /* Increased font size */
+    padding: 10px;
+    text-decoration: none;
+    color: #FFF;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .sidebar .menu li a:hover {
+    background-color: #393960;
+  }
+  
+  .sidebar .menu li .icon {
+    font-size: 1.5em; /* Increased icon size */
+    margin-right: 10px; /* Spacing between icon and text */
+  }
+  
