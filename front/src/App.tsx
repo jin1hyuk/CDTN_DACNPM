@@ -1,8 +1,4 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LoginPage from './features/login/components/loginLayout/loginLayout';
-import RegisterBox from './features/login/components/registerBox/registerBox'; 
-import ForgotPasswordPage from './features/login/components/forgotPasswordLayout/ForgotPasswordPage';
-import Home from "./features/homepage/components/home";
 import ProfilePage from './features/profile/pages/ProfilePage';
 import PostDetail from './features/profile/components/PostDetail';
 
