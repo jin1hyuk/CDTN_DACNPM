@@ -25,7 +25,7 @@ const LoginPage: React.FC = () => {
 
         if (user) {
             // Chuyển hướng đến trang chính khi đăng nhập thành công
-            navigate('/home');
+            navigate('/homeuser');
         } else {
             setError('Tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại.');
         }
