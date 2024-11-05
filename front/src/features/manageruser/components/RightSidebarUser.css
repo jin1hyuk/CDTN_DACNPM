@@ -1,0 +1,91 @@
+.right-sidebar {
+  width: 20%;
+  padding: 20px;
+  border: 0.5px solid #393960;
+  position: fixed; /* Fix the sidebar */
+  top: 70px; /* Space below the navbar */
+  right: 0;
+  height: calc(100vh - 70px); /* Full height minus navbar */
+  overflow-y: auto; /* Allow scrolling if content overflows */
+}
+
+.setuser {
+  background-color: #393960;
+  padding: 15px; /* Padding cho thẻ */
+  border-radius: 12px;
+  margin-bottom: 20px;
+  display: flex; /* Flexbox to arrange icons */
+  justify-content: space-around; /* Space between icons */
+  width: 70%; /* Rộng đầy đủ */
+  margin-left: 15% ;
+  height: 70px; /* Chiều cao thẻ ngắn lại */
+}
+
+.icon {
+  font-size: 29px; /* Kích thước biểu tượng cài đặt */
+  cursor: pointer; /* Hiển thị con trỏ khi hover */
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển màu và phóng to */
+}
+
+.more-options {
+  font-size: 37px; /* Kích thước lớn hơn cho biểu tượng ba gạch */
+}
+
+.icon:hover {
+  opacity: 1; /* Làm sáng biểu tượng khi hover */
+  transform: scale(1.2); /* Phóng to biểu tượng khi hover */
+}
+
+.user-list {
+  background-color: #393960;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+
+.user-list h2 {
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  color: #FFF;
+}
+
+.user-list .user {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.user-list .user:hover {
+  background-color: #4B4B6A;
+}
+
+.user-list .avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #555;
+  margin-right: 10px;
+}
+
+.user-list .user span {
+  color: #FFF;
+  font-size: 0.9em;
+}
+
+.see-more-button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  background-color: #528B8B;
+  color: #FFF;
+  text-decoration: none;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.see-more-button:hover {
+  background-color: #224466;
+}

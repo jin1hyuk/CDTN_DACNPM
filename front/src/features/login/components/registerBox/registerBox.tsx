@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './registerBox.css';
+import { users, User } from './userData';
 
 const RegisterBox: React.FC = () => {
     const [name, setName] = useState('');
@@ -10,13 +11,6 @@ const RegisterBox: React.FC = () => {
     const [message, setMessage] = useState('');
     const navigate = useNavigate();
 
-    // Dữ liệu người dùng giả
-    const users = [
-        { name: "Nguyễn Văn A", email: "user1@example.com", password: "password123" },
-        { name: "Trần Thị B", email: "user2@example.com", password: "password456" },
-        { name: "Quản Trị Viên", email: "admin@example.com", password: "admin123" }
-    ];
-
     const handleRegister = (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -25,7 +19,6 @@ const RegisterBox: React.FC = () => {
             return;
         }
 
-        // Kiểm tra xem email đã tồn tại trong dữ liệu giả chưa
         const existingUser = users.find(user => user.email === email);
 
         if (existingUser) {
@@ -33,12 +26,16 @@ const RegisterBox: React.FC = () => {
             return;
         }
 
-        // Nếu không có lỗi, thêm người dùng mới vào dữ liệu giả (không thực sự lưu trữ)
+        // Add new user to shared users array
         users.push({ name, email, password });
-        setMessage('Đăng ký thành công!');
-
-        // Chuyển hướng đến trang đăng nhập
-        navigate('/login');
+        
+        // Set success message
+        setMessage('Đăng ký thành công! Chuyển hướng đến trang đăng nhập...');
+        
+        // Redirect to login after a short delay
+        setTimeout(() => {
+            navigate('/login');
+        }, 2000); // Delay of 2 seconds
     };
 
     return (
@@ -75,7 +72,7 @@ const RegisterBox: React.FC = () => {
                         type="password"
                         placeholder="Confirm Password"
                         value={confirmPassword}
-onChange={(e) => setConfirmPassword(e.target.value)}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                         required
                         className="input"
                     />

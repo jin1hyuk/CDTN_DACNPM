@@ -1,19 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './loginLayout.css';
+import { users } from '../registerBox/userData';
 
 const LoginPage: React.FC = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-
-    // Dữ liệu giả
-    const users = [
-        { email: "user1@example.com", password: "password123", fullName: "Nguyễn Văn A" },
-        { email: "user2@example.com", password: "password456", fullName: "Trần Thị B" },
-        { email: "admin@example.com", password: "admin123", fullName: "Quản Trị Viên" }
-    ];
+    const [successMessage, setSuccessMessage] = useState('');
 
     const handleForgotPassword = () => {
         navigate('/forgot-password');
@@ -24,10 +19,17 @@ const LoginPage: React.FC = () => {
         const user = users.find(user => user.email === email && user.password === password);
 
         if (user) {
-            // Chuyển hướng đến trang chính khi đăng nhập thành công
-            navigate('/homeuser');
+            // Set success message and clear error
+            setSuccessMessage('Đăng nhập thành công! Chuyển hướng...');
+            setError('');
+
+            // Redirect after a short delay
+            setTimeout(() => {
+                navigate('/homeuser');
+            }, 2000); // Delay of 2 seconds
         } else {
             setError('Tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại.');
+            setSuccessMessage('');
         }
     };
 
@@ -45,7 +47,9 @@ const LoginPage: React.FC = () => {
             </div>
             <div className="loginForm">
                 <div className="formContainer">
-                    <h2 className="formTitle">Login</h2>{error && <p className="error">{error}</p>}
+                    <h2 className="formTitle">Login</h2>
+                    {error && <p className="error">{error}</p>}
+                    {successMessage && <p className="success">{successMessage}</p>}
                     <form onSubmit={handleSubmit}>
                         <input
                             type="email"
@@ -65,7 +69,7 @@ const LoginPage: React.FC = () => {
                         />
                         <div className="options">
                             <label><input type="checkbox" /> Remember me</label>
-<a href="#" onClick={handleForgotPassword} className="link">Forgot Password?</a>
+                            <a href="#" onClick={handleForgotPassword} className="link">Forgot Password?</a>
                         </div>
                         <button type="submit" className="loginbut">Login</button>
                     </form>

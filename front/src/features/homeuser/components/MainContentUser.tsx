@@ -41,7 +41,7 @@ const MainContent: React.FC<{ posts: any[] }> = ({ posts }) => {
       <div className="new-post">
         <div className="avatar"></div>
         <div className='postcard'>
-          <input type='textline' className='Textpost' placeholder="What do you thing?"></input>
+          <input type='textline' className='T' placeholder="What do you thing?"></input>
           <button className = 'Postbtn' onClick={() => setIsModalOpen(true)}>Post</button>
         </div>
         

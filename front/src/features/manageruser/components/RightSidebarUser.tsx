@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link từ react-router-dom
 import './RightSidebarUser.css';
 
 const RightSidebarUser: React.FC<{ users: { name: string }[] }> = ({ users }) => {
@@ -17,7 +16,7 @@ const RightSidebarUser: React.FC<{ users: { name: string }[] }> = ({ users }) =>
             <span>{user.name}</span>
           </div>
         ))}
-        <Link to="/manageruser" className="see-more-button">See More</Link> {/* Sử dụng Link */}
+        <a href="#" className="see-more-button">See More</a>
       </div>
     </div>
   );
