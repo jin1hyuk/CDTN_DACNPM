@@ -1,27 +1,30 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios'; // Import axios for making API calls
+import { useNavigate, Link } from 'react-router-dom';
 import './forgotPasswordLayout.css';
+import { users } from '../registerBox/userData'; // Import the user data array
 
 const ForgotPasswordPage: React.FC = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
-    const [error, setError] = useState(''); // State to handle any errors
+    const [error, setError] = useState('');
 
-    const handlePasswordReset = async (e: React.FormEvent) => {
+    const handlePasswordReset = (e: React.FormEvent) => {
         e.preventDefault();
-        setMessage(''); // Clear previous messages
-        setError(''); // Clear previous errors
+        setMessage('');
+        setError('');
 
-        try {
-            const response = await axios.post('YOUR_API_URL/forgot-password', { email }); // Replace with your API URL
-            if (response.data.success) {
-                setMessage('If an account with this email exists, a reset link has been sent.');
-            } else {
-                setError(response.data.message || 'Failed to send reset link. Please try again.');
-            }
-        } catch (error) {
-            setError('An error occurred. Please try again later.');
+        const userExists = users.some(user => user.email === email);
+
+        if (userExists) {
+            setMessage('Veryfi code have been sent .');
+
+            // Redirect to GoogleVerificationLayout after a short delay
+            setTimeout(() => {
+                navigate('/verify-code'); // Route to verification page
+            }, 2000); // 2-second delay before redirecting
+        } else {
+            setError('No account found with this email.');
         }
     };
 
@@ -30,7 +33,7 @@ const ForgotPasswordPage: React.FC = () => {
             <div className="formContainer">
                 <h2 className="formTitle">Forgot Password</h2>
                 {message && <p className="message">{message}</p>}
-                {error && <p className="error-message">{error}</p>} {/* Display error message if any */}
+                {error && <p className="error-message">{error}</p>}
 
                 <form onSubmit={handlePasswordReset}>
                     <input
@@ -44,7 +47,6 @@ const ForgotPasswordPage: React.FC = () => {
                     <button type="submit" className="resetBtn">Send Reset Link</button>
                 </form>
 
-                {/* Navigation Links */}
                 <div className="navigationLinks">
                     <Link to="/login" className="navLink">Back to Login</Link>
                     <span> | </span>
