@@ -112,7 +112,7 @@ const ProfilePosts: React.FC = () => {
   return (
     <div className="profile-posts">
       {postsData.map((post) => (
-        <div key={post.id} onClick={() => handlePostClick(post)}>
+        <div className="profile-post" key={post.id} onClick={() => handlePostClick(post)}>
           <Post
             id={post.id}
             title={post.title}

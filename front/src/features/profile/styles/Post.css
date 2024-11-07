@@ -54,11 +54,11 @@
 
 .image-carousel img {
   max-width: 150px;
+  max-height: 150px;
   min-width: 150px;
   /* Giới hạn chiều rộng của ảnh */
-  height: 150px;
   border-radius: 5px;
-  object-fit: fill;
+  object-fit: cover;
   user-select: none; /* Ngăn chặn tô đen khi kéo */
 }
 
