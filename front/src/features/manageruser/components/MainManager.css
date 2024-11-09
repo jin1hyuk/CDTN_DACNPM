@@ -1,4 +1,15 @@
-.container {
+/* Avatar Style */
+.mm-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  margin-right: 12px;
+}
+
+/* Container for the whole content */
+.mm-container {
   display: flex;
   align-items: flex-start; /* Align items to the top */
   justify-content: center;
@@ -8,171 +19,34 @@
   background-color: #1a1a2e; /* Same background as LoginPage */
 }
 
-.main-content {
-  width: 62%;
-  margin-top: 60px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  min-height: 1000px; /* Set a minimum height for the main content */
-  margin-left: 20%; /* Ensure main content doesn't overlap the left sidebar */
-  margin-right: 20%; /* Ensure main content doesn't overlap the right sidebar */
-}
-.Postbtn{
-  background-color: #FFF;
-  margin-left: 134px;
-  padding: 8px;
-  border-radius: 5px;
-}
-/* New post section */
-.new-post {
-  display: flex;
-  width: 80%;
-  background-color: #3D3D56;
-  height: 60px;
-  margin-left: 10%;
-  margin-right: 10%;
-  border-radius: 5px;
-  align-items: center;
-  margin-bottom: 20px; /* Space below the new post section */
-}
-
-.new-post .avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%; /* Make it circular */
-  background-color: #555; /* Placeholder for the avatar */
-  margin-right: 12px;
-  margin-left: 10px;
-}
-
-.new-post input {
-  flex: 1;
-  padding: 8px;
-  border: 1px solid #555;
-  border-radius: 4px;
-  background-color: #3D3D56;
-  color: #383b9d;
-}
-
-
-.new-post button:hover {
-  background-color: #336699; /* Darker shade on hover */
-}
-
-/* Post styling */
-.post {
-  background-color: #3D3D56;
+/* User Card Styling */
+.mm-user-card {
+  background-color: #fff;
+  padding: 12px;
   border-radius: 8px;
-  padding: 50px;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  width: 80%;
-  margin-left: 10%;
-  max-width: 800px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Initial shadow */
-  transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transition for shadow */
-}
-.Textpost{
-  margin-left: 2%;
-  margin-right: -32%;
-  width: 80%;
-}
-.post-header {
+  margin-bottom: 16px;
   display: flex;
   align-items: center;
-  margin-bottom: 10px; /* Space between header and content */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.post-header .avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px; /* Rounded corners */
-  background-color: #555;
-  margin-right: 10px;
+.mm-user-header {
+  display: flex;
+  align-items: center;
 }
 
-.username {
-  color: #FFF;
+.mm-username {
   font-weight: bold;
+  font-size: 16px;
 }
 
-/* Post content */
-.post-content {
-  color: #FFF;
-  margin-top: 25px;
-  margin-bottom: 25px; /* Space between content and actions */
+.mm-user-roles {
+  color: #777;
+  font-size: 14px;
 }
 
-/* Post actions styling */
-.post-actions {
-  display: flex;
-  gap: 15px; /* Space between action buttons */
-}
-
-.action-button {
-  background: none;
-  border: none;
-  color: #FFF;
-  cursor: pointer;
-  font-size: 1em;
-  transition: color 0.3s ease;
-}
-
-.action-button:hover {
-  color: #528B8B; /* Change color on hover */
-}
-
-.action-button.dislike {
-  color: #FF4D4D; /* Red for dislike */
-  margin-left: 10%;
-  margin-right: 10%;
-}
-
-.action-button.save {
-  color: #528B8B; /* Custom color for save button */
-  margin-left: 10%;
-  margin-right: 10%;
-}
-
-.post:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Larger shadow on hover */
-  transform: translateY(-5px); /* Slight lift on hover */
-}
-
-/* Comments section styling */
-.comments-section {
-  margin-top: 10px;
-  padding-top: 10px;
-  border-top: 1px solid #555;
-}
-
-.comments {
-  margin-bottom: 10px;
-}
-
-.comment {
-  color: #FFF;
-  margin-bottom: 5px;
-}
-
-.comment-input {
-  display: flex;
-}
-
-.comment-input input {
-  flex: 1;
-  padding: 8px;
-  border: 1px solid #555;
-  border-radius: 4px;
-  background-color: #3D3D56;
-  color: #FFF;
-}
-
-/* Timestamp styling */
-.timestamp {
-  font-size: 0.8em;
-  color: rgba(255, 255, 255, 0.6); /* Faded color for timestamp */
-  margin-top: 2px;
+.mm-main-content {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
 }

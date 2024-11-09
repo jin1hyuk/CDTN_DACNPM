@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './verifyCodeLayout.css';
-import { users } from '../registerBox/userData';
+import { users } from '../../../homeuser/components/userData';
 
 const VerifyCodePage: React.FC = () => {
+    const [email, setEmail] = useState('');
     const [code, setCode] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -16,8 +17,8 @@ const VerifyCodePage: React.FC = () => {
         setMessage('');
         setError('');
 
-        // Find the user with the matching verification code
-        const userIndex = users.findIndex(user => user.verifyCode === code);
+        // Find the user with the matching email and verification code
+        const userIndex = users.findIndex(user => user.email === email && user.verifyCode === code);
 
         if (userIndex !== -1) {
             if (newPassword === confirmPassword) {
@@ -25,6 +26,9 @@ const VerifyCodePage: React.FC = () => {
                 users[userIndex].password = newPassword;
                 setMessage('Password updated successfully! Redirecting to login...');
                 
+                // Add the user to the shared users array if not already there (optional)
+                users.push({ name: users[userIndex].name, email, password: newPassword });
+
                 setTimeout(() => {
                     navigate('/login'); // Route to login page
                 }, 2000); // 2-second delay before redirecting
@@ -32,18 +36,26 @@ const VerifyCodePage: React.FC = () => {
                 setError('Passwords do not match. Please try again.');
             }
         } else {
-            setError('Invalid verification code. Please try again.');
+            setError('Invalid email or verification code. Please try again.');
         }
     };
 
     return (
         <div className="verify-container">
             <div className="formContainer">
-                <h2 className="formTitle">Verify Code</h2>
+                <h2 className="formTitle">Change password</h2>
                 {message && <p className="message">{message}</p>}
                 {error && <p className="error-message">{error}</p>}
 
                 <form onSubmit={handleCodeVerification}>
+                    <input
+                        type="email"
+                        placeholder="Enter your email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        required
+                        className="input"
+                    />
                     <input
                         type="text"
                         placeholder="Enter your verification code"

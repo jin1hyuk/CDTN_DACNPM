@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './registerBox.css';
-import { users, User } from './userData';
+
+interface User {
+    name: string;
+    email: string;
+    password: string;
+}
 
 const RegisterBox: React.FC = () => {
     const [name, setName] = useState('');
@@ -9,33 +14,53 @@ const RegisterBox: React.FC = () => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [message, setMessage] = useState('');
+    const [tempUsers, setTempUsers] = useState<User[]>([]);  // Temporary storage array
     const navigate = useNavigate();
+
+    // Function to push user data to MockAPI
+    const saveUserToApi = async (user: User) => {
+        try {
+            const response = await fetch('https://672ede12229a881691f12947.mockapi.io/posts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user),
+            });
+
+            if (response.ok) {
+                setMessage('User registered successfully! Redirecting to login...');
+                setTimeout(() => navigate('/login'), 2000); // Redirect after 2 seconds
+            } else {
+                setMessage('Failed to register user on API.');
+            }
+        } catch (error) {
+            setMessage('An error occurred while saving to API.');
+        }
+    };
 
     const handleRegister = (e: React.FormEvent) => {
         e.preventDefault();
 
         if (password !== confirmPassword) {
-            setMessage('Mật khẩu xác nhận không khớp.');
+            setMessage('Password confirmation does not match.');
             return;
         }
 
-        const existingUser = users.find(user => user.email === email);
-
+        // Check if email already exists in tempUsers
+        const existingUser = tempUsers.find(user => user.email === email);
         if (existingUser) {
-            setMessage('Email đã tồn tại.');
+            setMessage('Email already exists in temporary storage.');
             return;
         }
 
-        // Add new user to shared users array
-        users.push({ name, email, password });
-        
-        // Set success message
-        setMessage('Đăng ký thành công! Chuyển hướng đến trang đăng nhập...');
-        
-        // Redirect to login after a short delay
-        setTimeout(() => {
-            navigate('/login');
-        }, 2000); // Delay of 2 seconds
+        // Create new user and push to tempUsers
+        const newUser = { name, email, password };
+        const updatedTempUsers = [...tempUsers, newUser];
+        setTempUsers(updatedTempUsers);  // Update state with new user
+
+        // Push the new user to MockAPI
+        saveUserToApi(newUser);
     };
 
     return (

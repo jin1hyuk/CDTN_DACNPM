@@ -1,27 +1,69 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './MainManager.css';
 
-interface User {
-  name: string;
-  avatar: string;
-}
+const MainManager: React.FC = () => {
+  const [userList, setUserList] = useState<any[]>([]);
 
-interface MainManagerProps {
-  users: User[];
-}
+  // Fake user data
+  const fakeUsers = [
+    {
+      id: 1,
+      name: 'John Doe',
+      avatar: 'https://via.placeholder.com/40',
+      roles: ['Admin', 'Moderator']
+    },
+    {
+      id: 2,
+      name: 'Jane Smith',
+      avatar: 'https://via.placeholder.com/40',
+      roles: ['User']
+    },
+    {
+      id: 3,
+      name: 'Mike Johnson',
+      avatar: 'https://via.placeholder.com/40',
+      roles: ['User']
+    },
+    {
+      id: 4,
+      name: 'Sara Williams',
+      avatar: 'https://via.placeholder.com/40',
+      roles: ['Moderator']
+    },
+    {
+      id: 5,
+      name: 'David Brown',
+      avatar: 'https://via.placeholder.com/40',
+      roles: ['Admin']
+    }
+  ];
 
-const MainManager: React.FC<MainManagerProps> = ({ users }) => {
-  return (
-    <div className="main-content">
-      <h2>User List</h2>
-      <div className="user-list">
-        {users.slice(0, 20).map((user, index) => (
-          <div className="user" key={index}>
-            <div className="avatar" style={{ backgroundImage: `url(${user.avatar})` }}></div>
-            <span className="username">{user.name}</span>
+  // Set the user list with the fake users array
+  useEffect(() => {
+    setUserList(fakeUsers); // Use the fake user list
+  }, []);
+
+  // Function to render the user list
+  const renderUserList = () => {
+    return userList.map((user) => (
+      <div className="mm-user-card" key={user.id}>
+        <div className="mm-user-header">
+          <div className="mm-avatar" style={{ backgroundImage: `url(${user.avatar || 'https://via.placeholder.com/40'})` }}></div>
+          <div>
+            <span className="mm-username">{user.name}</span>
+            <div className="mm-user-roles">{user.roles.join(', ')}</div> {/* Display roles */}
           </div>
-        ))}
+          <div></div>
+        </div>
       </div>
+    ));
+  };
+
+  return (
+    <div className="mm-main-content">
+      <h2>User List</h2>
+      {/* Render the user list */}
+      {renderUserList()}
     </div>
   );
 };

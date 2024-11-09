@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import './forgotPasswordLayout.css';
-import { users } from '../registerBox/userData'; // Import the user data array
+import { users } from '../../../homeuser/components/userData'; // Import the user data array
 
 const ForgotPasswordPage: React.FC = () => {
     const navigate = useNavigate();

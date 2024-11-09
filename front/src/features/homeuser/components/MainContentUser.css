@@ -1,30 +1,13 @@
-.container {
-  display: flex;
-  align-items: flex-start; /* Align items to the top */
-  justify-content: center;
-  width: 100%;
-  min-height: calc(100vh - 70px); /* Ensure container height extends below the navbar */
-  margin-top: 70px; /* Add margin-top to prevent content from hiding under the navbar */
-  background-color: #1a1a2e; /* Same background as LoginPage */
+/* Styling for the user avatar */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 15%;
+  background-size: cover;
+  background-position: center;
+  margin-right: 12px;
 }
 
-.main-content {
-  width: 62%;
-  margin-top: 60px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  min-height: 1000px; /* Set a minimum height for the main content */
-  margin-left: 20%; /* Ensure main content doesn't overlap the left sidebar */
-  margin-right: 20%; /* Ensure main content doesn't overlap the right sidebar */
-}
-.Postbtn{
-  background-color: #FFF;
-  margin-left: 134px;
-  padding: 8px;
-  border-radius: 5px;
-}
 /* New post section */
 .new-post {
   display: flex;
@@ -35,14 +18,14 @@
   margin-right: 10%;
   border-radius: 5px;
   align-items: center;
-  margin-bottom: 20px; /* Space below the new post section */
+  margin-bottom: 20px;
 }
 
 .new-post .avatar {
   width: 40px;
   height: 40px;
-  border-radius: 50%; /* Make it circular */
-  background-color: #555; /* Placeholder for the avatar */
+  border-radius: 15%;
+  background-color: #555;
   margin-right: 12px;
   margin-left: 10px;
 }
@@ -56,9 +39,120 @@
   color: #383b9d;
 }
 
+/* Post styling */
+.post {
+  background-color: #3D3D56;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  width: 80%;
+  margin-left: 10%;
+  max-width: 800px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
 
-.new-post button:hover {
-  background-color: #336699; /* Darker shade on hover */
+/* Post title and description */
+.post-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #FFF;
+}
+
+.post-description {
+  color: #FFF;
+  margin-top: 10px;
+}
+
+.post-body {
+  color: #FFF;
+  margin-top: 10px;
+}
+
+/* Post header (username, avatar, timestamp) */
+.post-header {
+  display: flex;
+  align-items: center; /* Aligns items vertically in the middle */
+  margin-bottom: 10px;
+}
+
+/* Styling for username */
+.username {
+  color: #FFF;
+  font-weight: bold;
+  margin-left: 10px;  /* Adds space between the avatar and username */
+}
+
+/* Styling for timestamp */
+.timestamp {
+  font-size: 0.8em;
+  color: rgba(255, 255, 255, 0.6);
+  margin-left: 10px;  /* Adds space between the username and timestamp */
+}
+
+/* Post actions (like, dislike, comment) */
+.post-actions {
+  margin-top: 15px;
+}
+
+.action-button {
+  background-color: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
+.action-button:hover {
+  color: #0099cc;
+}
+
+.comments-section {
+  margin-top: 15px;
+}
+
+.comment-input {
+  margin-top: 10px;
+}
+
+.comment-input input {
+  width: 100%;
+  padding: 8px;
+  background-color: #555;
+  border: none;
+  color: white;
+}
+
+.comment {
+  padding: 8px;
+  margin-bottom: 5px;
+  background-color: #444;
+  border-radius: 5px;
+}
+
+.comment-input input::placeholder {
+  color: #ccc;
+}
+.container {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+  justify-content: center;
+  width: 100%;
+  min-height: calc(100vh - 70px); /* Ensure container height extends below the navbar */
+  margin-top: 70px; /* Add margin-top to prevent content from hiding under the navbar */
+  background-color: #1a1a2e; /* Same background as LoginPage */
+}
+.main-content {
+  width: 62%;
+  margin-top: 60px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 1000px; /* Set a minimum height for the main content */
+  margin-left: 20%; /* Ensure main content doesn't overlap the left sidebar */
+  margin-right: 20%; /* Ensure main content doesn't overlap the right sidebar */
 }
 
 /* Post styling */
@@ -74,11 +168,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Initial shadow */
   transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transition for shadow */
 }
-.Textpost{
-  margin-left: 2%;
-  margin-right: -29%;
-  width: 78%;
-}
+
 .post-header {
   display: flex;
   align-items: center;
@@ -88,7 +178,7 @@
 .post-header .avatar {
   width: 40px;
   height: 40px;
-  border-radius: 8px; /* Rounded corners */
+  border-radius: 50%;
   background-color: #555;
   margin-right: 10px;
 }
@@ -103,6 +193,13 @@
   color: #FFF;
   margin-top: 25px;
   margin-bottom: 25px; /* Space between content and actions */
+}
+/* Post title styling */
+.post-title {
+  font-size: 1.2em;
+  font-weight: bold;
+  color: #FFF;
+  margin-bottom: 5px;
 }
 
 /* Post actions styling */
@@ -119,29 +216,66 @@
   font-size: 1em;
   transition: color 0.3s ease;
 }
-
+.action-button {
+  background: none;
+  border: none;
+  color: #FFF;
+  cursor: pointer;
+  font-size: 0.8em;
+  transition: color 0.3s ease;
+}
 .action-button:hover {
   color: #528B8B; /* Change color on hover */
 }
-
 .action-button.dislike {
   color: #FF4D4D; /* Red for dislike */
   margin-left: 10%;
   margin-right: 10%;
 }
-
 .action-button.save {
   color: #528B8B; /* Custom color for save button */
   margin-left: 10%;
   margin-right: 10%;
+  
 }
-
 .post:hover {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5); /* Larger shadow on hover */
   transform: translateY(-5px); /* Slight lift on hover */
 }
 
-/* Comments section styling */
+/* Button styling */
+.action-button {
+  background-color: #528B8B;
+  color: #FFF;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-right: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+  background-color: #336699; /* Darker shade on hover */
+}
+
+
+/* Button styling */
+.action-button {
+  background-color: #528B8B;
+  color: #FFF;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  margin-right: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.action-button:hover {
+  background-color: #336699; /* Darker shade on hover */
+}
+
 .comments-section {
   margin-top: 10px;
   padding-top: 10px;
@@ -168,6 +302,12 @@
   border-radius: 4px;
   background-color: #3D3D56;
   color: #FFF;
+}.post-header .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px; /* Rounded corners */
+  background-color: #555;
+  margin-right: 10px;
 }
 
 /* Timestamp styling */
@@ -175,4 +315,78 @@
   font-size: 0.8em;
   color: rgba(255, 255, 255, 0.6); /* Faded color for timestamp */
   margin-top: 2px;
+}
+/* Container for think-text and Postbtn */
+.postcard {
+  display: flex;
+  align-items: center; /* Aligns items vertically centered */
+}
+
+/* Styling for think-text */
+.think-text {
+  color: #FFF;
+  font-size: 1.2em;
+  width: 100%;
+  margin-left: 10px;
+  margin-right: 10px; /* Space between think-text and Postbtn */
+}
+
+/* Styling for Postbtn */
+.Postbtn {
+  background-color: #528B8B;
+  color: #FFF;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-left: 130px;
+}
+
+.Postbtn:hover {
+  background-color: #336699; /* Darker shade on hover */
+}
+/* Comment section styling */
+.comments-section {
+  margin-top: 20px;
+  background-color: #2f2f3d;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.comment {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+}
+
+.comment-time {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8em;
+  margin-left: 8px;
+}
+
+.comment-text {
+  color: #FFF;
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
+.comment-input input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  background-color: #333;
+  border: 1px solid #555;
+  color: #FFF;
+  border-radius: 4px;
+}
+
+.comment-input input::placeholder {
+  color: #aaa;
 }

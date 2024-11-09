@@ -2,51 +2,109 @@
   width: 20%;
   padding: 20px;
   border: 0.5px solid #393960;
-  position: fixed; /* Fix the sidebar */
-  top: 70px; /* Space below the navbar */
+  position: fixed;
+  top: 70px;
   right: 0;
-  height: calc(100vh - 70px); /* Full height minus navbar */
-  overflow-y: auto; /* Allow scrolling if content overflows */
+  height: calc(100vh - 70px);
+  overflow-y: auto;
 }
 
 .setuser {
   background-color: #393960;
-  padding: 15px; /* Padding cho thẻ */
+  padding: 15px;
   border-radius: 12px;
   margin-bottom: 20px;
-  display: flex; /* Flexbox to arrange icons */
-  justify-content: space-around; /* Space between icons */
-  width: 70%; /* Rộng đầy đủ */
-  margin-left: 15% ;
-  height: 70px; /* Chiều cao thẻ ngắn lại */
+  display: flex;
+  justify-content: space-around;
+  width: 70%;
+  margin-left: 15%;
+  height: 70px;
 }
 
 .icon {
-  font-size: 29px; /* Kích thước biểu tượng cài đặt */
-  cursor: pointer; /* Hiển thị con trỏ khi hover */
-  transition: opacity 0.3s ease, transform 0.3s ease; /* Hiệu ứng chuyển màu và phóng to */
+  font-size: 29px;
+  cursor: pointer;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .more-options {
-  font-size: 37px; /* Kích thước lớn hơn cho biểu tượng ba gạch */
+  font-size: 37px;
 }
 
 .icon:hover {
-  opacity: 1; /* Làm sáng biểu tượng khi hover */
-  transform: scale(1.2); /* Phóng to biểu tượng khi hover */
+  opacity: 1;
+  transform: scale(1.2);
 }
 
-.user-list {
+/* Dropdown menu for settings */
+.settings-menu {
   background-color: #393960;
   padding: 10px;
   border-radius: 8px;
-  margin-bottom: 15px;
+  margin-top: 10px;
+  position: absolute;
+  top: 80px; /* Position the dropdown menu below the icons */
+  right: 0;
+  width: 200px; /* Adjust the width of the dropdown */
+  display: flex;
+  flex-direction: column;
+  z-index: 10; /* Ensure it shows above other elements */
+}
+
+.menu-option {
+  display: block;
+  padding: 10px;
+  color: #fff;
+  text-decoration: none;
+  margin: 5px 0;
+  border-radius: 4px;
+}
+
+.menu-option:hover {
+  background-color: #4b4b6a;
+}
+
+/* Dropdown menu for more options */
+.more-options-menu {
+  background-color: #393960;
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+  position: absolute;
+  top: 80px;
+  right: 0;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.more-options-menu .menu-option {
+  display: block;
+  padding: 10px;
+  color: #fff;
+  text-decoration: none;
+  margin: 5px 0;
+  border-radius: 4px;
+}
+
+.more-options-menu .menu-option:hover {
+  background-color: #4b4b6a;
+}
+
+/* User list styles */
+.user-list {
+  background-color: #393960;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .user-list h2 {
   font-size: 1.1em;
   margin-bottom: 10px;
-  color: #FFF;
+  color: #fff;
 }
 
 .user-list .user {
@@ -58,7 +116,7 @@
 }
 
 .user-list .user:hover {
-  background-color: #4B4B6A;
+  background-color: #4b4b6a;
 }
 
 .user-list .avatar {
@@ -70,7 +128,7 @@
 }
 
 .user-list .user span {
-  color: #FFF;
+  color: #fff;
   font-size: 0.9em;
 }
 
@@ -79,8 +137,8 @@
   width: 100%;
   padding: 10px;
   text-align: center;
-  background-color: #528B8B;
-  color: #FFF;
+  background-color: #528b8b;
+  color: #fff;
   text-decoration: none;
   border-radius: 4px;
   margin-top: 10px;

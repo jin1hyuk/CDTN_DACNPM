@@ -1,49 +1,129 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
+/* Container chính */
+.m-user-main-content {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  color: #ffffff;
+  background-color: #1a1a2e;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-.main-content {
-  background-color: #1A1A2E;
-  color: #FFF;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px; /* Add some padding for better spacing */
+/* Tiêu đề */
+.m-user-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  color: #00aaff;
+  font-weight: bold;
 }
 
-.user-list {
-  width: 100%;
-  max-width: 800px; /* Set a maximum width for the user list */
-  margin-top: 20px;
+/* Phần tìm kiếm */
+.m-user-search {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 20px;
 }
 
-.user {
-  display: flex;
-  align-items: center;
+.m-user-search-input {
   padding: 10px;
-  border-bottom: 1px solid #555; /* Add a bottom border for separation */
-  transition: background-color 0.3s ease;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  width: 300px;
 }
 
-.user:hover {
-  background-color: #4B4B6A; /* Change background color on hover */
+.m-user-search-btn {
+  padding: 10px;
+  background-color: #00aaff;
+  border: none;
+  color: #fff;
+  font-size: 14px;
+  border-radius: 5px;
+  margin-left: 10px;
+  cursor: pointer;
 }
 
-.avatar {
-  width: 40px;
-  height: 40px;
+.m-user-search-btn:hover {
+  background-color: #0088cc;
+}
+
+/* Danh sách người dùng */
+.m-user-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Thẻ người dùng */
+.m-user-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #2a2a44;
+  border-radius: 10px;
+  padding: 15px;
+  width: 150px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: #ffffff;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+/* Ảnh đại diện */
+.m-user-avatar {
+  width: 80px;
+  height: 80px;
+  background-size: cover;
+  background-position: center;
   border-radius: 50%;
-  background-color: #555;
-  margin-right: 10px;
-  background-size: cover; /* Ensure the avatar image covers the div */
+  margin-bottom: 10px;
+  border: 2px solid #00aaff;
 }
 
-.username {
-  color: #FFF;
-  font-size: 1.1em;
+/* Thông tin người dùng */
+.m-user-details {
+  text-align: center;
+}
+
+/* Tên người dùng */
+.m-user-username {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 5px;
+}
+
+/* Email người dùng */
+.m-user-email {
+  font-size: 14px;
+  color: #b3b3b3;
+}
+
+/* Hiệu ứng hover */
+.m-user-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Phản hồi cho màn hình nhỏ */
+@media (max-width: 600px) {
+  .m-user-main-content {
+    padding: 10px;
+    max-width: 100%;
+  }
+  .m-user-card {
+    width: 100px;
+    padding: 10px;
+  }
+  .m-user-username {
+    font-size: 14px;
+  }
+  .m-user-email {
+    font-size: 12px;
+  }
+  .m-user-avatar {
+    width: 60px;
+    height: 60px;
+  }
 }

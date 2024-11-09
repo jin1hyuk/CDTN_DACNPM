@@ -1,9 +1,10 @@
 import React from 'react';
 import './manageruser.css';
-import Navbar from './NavbarUser';
-import Sidebar from './SidebarUser';
-import RightSidebar from './RightSidebarUser';
+import Navbar from '../../homepage/components/Navbar';
+import Sidebar from '../../homepage/components/Sidebar';
 import MainManager from './MainManager';
+import RightSidebarUser from '../../homeuser/components/RightSidebarUser';
+
 
 const ManagerUser: React.FC = () => {
   const users = [
@@ -25,7 +26,7 @@ const ManagerUser: React.FC = () => {
       <div className="container">
         <Sidebar leaderboard={leaderboard} />
 
-        <RightSidebar users={users} />
+        <RightSidebarUser users={users} />
       </div>
     </div>
   );
