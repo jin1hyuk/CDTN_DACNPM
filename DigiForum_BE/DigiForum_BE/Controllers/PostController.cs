@@ -4,6 +4,8 @@ using DigiForum_BE.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace DigiForum_BE.Controllers
 {
@@ -18,46 +20,57 @@ namespace DigiForum_BE.Controllers
             _context = context;
         }
 
-        // Thêm bài đăng mới
         [HttpPost("add")]
+        [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> AddPost([FromBody] Post post)
         {
-            var user = await _context.Users.FindAsync(post.UserId);
+
+            var userId = User.FindFirstValue("user_id");
+
+            if (userId == null)
+            {
+                return BadRequest("Không tìm thấy thông tin người dùng trong token.");
+            }
+
+            if (!Guid.TryParse(userId, out Guid parsedUserId))
+            {
+                return BadRequest("user_id không hợp lệ.");
+            }
+
+            var user = await _context.Users.FindAsync(parsedUserId);
             if (user == null)
             {
                 return BadRequest("User không tồn tại.");
             }
 
-            post.UserId = post.UserId;
+            post.UserId = parsedUserId;
+            post.Status = "pending";
+
             _context.Posts.Add(post);
             await _context.SaveChangesAsync();
-
-            // Trả về bài đăng dưới dạng JSON kèm thông tin người đăng
-            var result = await _context.Posts
-                .Where(p => p.PostId == post.PostId)
-                .Include(p => p.User)
-                .Select(p => new
-                {
-                    p.PostId,
-                    p.Title,
-                    p.Content,
-                    p.ImagePath,
-                    p.CreatedAt,
-                    p.UpdatedAt,
-                    p.Status,
-                    User = new { p.User.Id, p.User.Name, p.User.Email }
-                })
-                .FirstOrDefaultAsync();
-
-            return Ok(result);
+            return Ok("Tạo bài đăng thành công.");
         }
 
-        // Lấy bài đăng theo UserId
-        [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetPostsByUserId(Guid userId)
+        [HttpGet("user/posts-pending")]
+        [Authorize(Roles = "User,Admin")]
+        public async Task<IActionResult> GetPostsPendingByUserId()
         {
+            var userId = User.FindFirstValue("user_id");
+
+            if (userId == null)
+            {
+                return BadRequest("Không tìm thấy thông tin người dùng trong token.");
+            }
+
+            // Chuyển đổi userId thành Guid
+            if (!Guid.TryParse(userId, out Guid parsedUserId))
+            {
+                return BadRequest("user_id không hợp lệ.");
+            }
+
+            // Lấy danh sách bài đăng có status là pending và UserId từ token
             var posts = await _context.Posts
-                .Where(p => p.UserId == userId)
+                .Where(p => p.UserId == parsedUserId && p.Status == "pending")
                 .Include(p => p.User)
                 .Select(p => new
                 {
@@ -68,15 +81,88 @@ namespace DigiForum_BE.Controllers
                     p.CreatedAt,
                     p.UpdatedAt,
                     p.Status,
-                    User = new { p.User.Id, p.User.Name, p.User.Email }
+                    User = new { p.User.Id, p.User.Username, p.User.FullName, p.User.Email }
                 })
                 .ToListAsync();
 
             return Ok(posts);
         }
 
-        // Lấy tất cả bài đăng
+        [HttpGet("user/posts-approved")]
+        [Authorize(Roles = "User,Admin")]
+        public async Task<IActionResult> GetPostsApprovedByUserId()
+        {
+            var userId = User.FindFirstValue("user_id");
+
+            if (userId == null)
+            {
+                return BadRequest("Không tìm thấy thông tin người dùng trong token.");
+            }
+
+            // Chuyển đổi userId thành Guid
+            if (!Guid.TryParse(userId, out Guid parsedUserId))
+            {
+                return BadRequest("user_id không hợp lệ.");
+            }
+
+            // Lấy danh sách bài đăng có status là approved và UserId từ token
+            var posts = await _context.Posts
+                .Where(p => p.UserId == parsedUserId && p.Status == "approved")
+                .Include(p => p.User)
+                .Select(p => new
+                {
+                    p.PostId,
+                    p.Title,
+                    p.Content,
+                    p.ImagePath,
+                    p.CreatedAt,
+                    p.UpdatedAt,
+                    p.Status,
+                    User = new { p.User.Id, p.User.Username, p.User.FullName, p.User.Email }
+                })
+                .ToListAsync();
+
+            return Ok(posts);
+        }
+        [HttpGet("user/posts-declined")]
+        [Authorize(Roles = "User,Admin")]
+        public async Task<IActionResult> GetPostsDeclinedByUserId()
+        {
+            var userId = User.FindFirstValue("user_id");
+
+            if (userId == null)
+            {
+                return BadRequest("Không tìm thấy thông tin người dùng trong token.");
+            }
+
+            // Chuyển đổi userId thành Guid
+            if (!Guid.TryParse(userId, out Guid parsedUserId))
+            {
+                return BadRequest("user_id không hợp lệ.");
+            }
+
+            // Lấy danh sách bài đăng có status là approved và UserId từ token
+            var posts = await _context.Posts
+                .Where(p => p.UserId == parsedUserId && p.Status == "declined")
+                .Include(p => p.User)
+                .Select(p => new
+                {
+                    p.PostId,
+                    p.Title,
+                    p.Content,
+                    p.ImagePath,
+                    p.CreatedAt,
+                    p.UpdatedAt,
+                    p.Status,
+                    User = new { p.User.Id, p.User.Username, p.User.FullName, p.User.Email }
+                })
+                .ToListAsync();
+
+            return Ok(posts);
+        }
+
         [HttpGet("all")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllPosts()
         {
             var posts = await _context.Posts
@@ -90,46 +176,161 @@ namespace DigiForum_BE.Controllers
                     p.CreatedAt,
                     p.UpdatedAt,
                     p.Status,
-                    User = new { p.User.Id, p.User.Name, p.User.Email }
+                    User = new { p.User.Id, p.User.Username, p.User.Email }
                 })
                 .ToListAsync();
 
             return Ok(posts);
         }
 
-        // Cập nhật bài đăng
-        [HttpPut("update/{postId}")]
-        public async Task<IActionResult> UpdatePost(Guid postId, [FromBody] Post post)
+        [HttpGet("all-approved")]
+        [Authorize(Roles = "Admin,User")]
+        public async Task<IActionResult> GetAllApprovedPosts()
         {
-            var existingPost = await _context.Posts.FindAsync(postId);
-            if (existingPost == null)
+            var posts = await _context.Posts
+                .Where(p => p.Status == "approved")  // Lọc bài đăng có trạng thái approved
+                .Include(p => p.User)
+                .Select(p => new
+                {
+                    p.PostId,
+                    p.Title,
+                    p.Content,
+                    p.ImagePath,
+                    p.CreatedAt,
+                    p.UpdatedAt,
+                    p.Status,
+                    User = new { p.User.Id, p.User.Username, p.User.Email }
+                })
+                .ToListAsync();
+
+            return Ok(posts);
+        }
+        public class UpdatePostRequest
+        {
+            public Guid PostId { get; set; }
+            public string NewStatus { get; set; }
+        }
+
+        [HttpPut("update-status")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdatePostStatus([FromBody] UpdatePostRequest request)
+        {
+            // Kiểm tra trạng thái hợp lệ
+            var validStatuses = new[] { "pending", "approved", "declined" };
+            if (!validStatuses.Contains(request.NewStatus))
+            {
+                return BadRequest("Trạng thái không hợp lệ.");
+            }
+
+            // Tìm bài viết theo postId
+            var post = await _context.Posts.FindAsync(request.PostId);
+            if (post == null)
             {
                 return NotFound("Bài đăng không tồn tại.");
             }
 
-            existingPost.Title = post.Title;
-            existingPost.Content = post.Content;
-            existingPost.ImagePath = post.ImagePath;
+            // Cập nhật trạng thái bài viết
+            post.Status = request.NewStatus;
+            post.UpdatedAt = DateTime.UtcNow;  // Cập nhật thời gian sửa đổi
+
+            // Lưu thay đổi vào database
+            await _context.SaveChangesAsync();
+
+            return Ok("Cập nhật trạng thái bài viết thành công.");
+        }
+
+        [HttpPut("update-post")]
+        [Authorize(Roles = "Admin,User")]
+        public async Task<IActionResult> UpdatePost([FromBody] Post post)
+        {
+            var userId = User.FindFirstValue("user-id");
+
+            var existingPost = await _context.Posts
+                .Where(p => p.PostId == post.PostId && p.UserId == Guid.Parse(userId))
+                .FirstOrDefaultAsync();
+
+            if (existingPost == null)
+            {
+                return NotFound("Bài đăng không tồn tại hoặc bạn không có quyền cập nhật bài đăng này.");
+            }
+
+            existingPost.Title = post.Title ?? existingPost.Title;
+            existingPost.Content = post.Content ?? existingPost.Content;
+            existingPost.ImagePath = post.ImagePath ?? existingPost.ImagePath;
+            existingPost.Status = "pending";
             existingPost.UpdatedAt = DateTime.UtcNow;
-            existingPost.Status = post.Status;
 
             await _context.SaveChangesAsync();
             return Ok("Cập nhật bài đăng thành công.");
         }
 
-        // Xóa bài đăng
-        [HttpDelete("delete/{postId}")]
-        public async Task<IActionResult> DeletePost(Guid postId)
+
+        [HttpDelete("delete")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeletePost([FromBody] Guid postId)
         {
+            // Tìm bài đăng theo postId
             var post = await _context.Posts.FindAsync(postId);
             if (post == null)
             {
                 return NotFound("Bài đăng không tồn tại.");
             }
 
+            var likesToRemove = _context.Likes.Where(l => l.PostId == postId);
+            _context.Likes.RemoveRange(likesToRemove);
+
             _context.Posts.Remove(post);
             await _context.SaveChangesAsync();
-            return Ok("Xóa bài đăng thành công.");
+
+            return Ok("Xóa bài đăng và tất cả các like liên quan thành công.");
         }
+
+
+        [HttpDelete("delete-post-by-userId")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeletePostByUserId([FromBody] Guid postId)
+        {
+            var userIdFromToken = User.FindFirstValue("user_id");
+
+            if (string.IsNullOrEmpty(userIdFromToken))
+            {
+                return BadRequest("Không tìm thấy thông tin người dùng trong token.");
+            }
+
+            if (!Guid.TryParse(userIdFromToken, out Guid parsedUserId))
+            {
+                return BadRequest("user_id không hợp lệ.");
+            }
+
+            var post = await _context.Posts.FindAsync(postId);
+            if (post == null)
+            {
+                return NotFound("Bài đăng không tồn tại.");
+            }
+
+            if (post.UserId == parsedUserId)
+            {
+                // Xóa tất cả like của bài đăng này
+                var likesToDelete = await _context.Likes
+                    .Where(l => l.PostId == postId)
+                    .ToListAsync();
+
+                if (likesToDelete.Any())
+                {
+                    _context.Likes.RemoveRange(likesToDelete); // Xóa tất cả like
+                }
+
+                // Xóa bài đăng
+                _context.Posts.Remove(post);
+                await _context.SaveChangesAsync();
+                return Ok("Xóa bài đăng và tất cả like liên quan thành công.");
+            }
+            else
+            {
+                return Unauthorized("Bạn không xóa bài đăng này được.");
+            }
+        }
+
+
     }
 }

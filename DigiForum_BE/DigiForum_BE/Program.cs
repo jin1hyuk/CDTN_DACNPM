@@ -77,10 +77,9 @@ builder.Services
     });
 builder.Services.AddAuthorization(options =>
 {
-    options.AddPolicy("Admin", policy => policy.RequireRole("admin"));
-    options.AddPolicy("User", policy => policy.RequireRole("user"));
-    options.AddPolicy("Anonymous", policy => policy.RequireRole("anonymous"));
-    options.AddPolicy("AdsUser", policy => policy.RequireRole("adsuser"));
+    options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+    options.AddPolicy("User", policy => policy.RequireRole("User"));
+    options.AddPolicy("AdsUser", policy => policy.RequireRole("AdsUser"));
 });
 
 // Add services to the container.
