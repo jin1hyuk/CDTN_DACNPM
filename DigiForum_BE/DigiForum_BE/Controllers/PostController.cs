@@ -48,6 +48,19 @@ namespace DigiForum_BE.Controllers
 
             _context.Posts.Add(post);
             await _context.SaveChangesAsync();
+
+            var notification = new Notification
+            {
+                UserId = parsedUserId,
+                PostId = post.PostId,
+                Message = $"Bài viết '{post.Title}' của bạn đã được tạo và đang chờ duyệt.",
+                CreatedAt = DateTime.UtcNow,
+                IsRead = false 
+            };
+
+            _context.Notifications.Add(notification);
+            await _context.SaveChangesAsync();
+
             return Ok("Tạo bài đăng thành công.");
         }
 
@@ -81,7 +94,11 @@ namespace DigiForum_BE.Controllers
                     p.CreatedAt,
                     p.UpdatedAt,
                     p.Status,
-                    User = new { p.User.Id, p.User.Username, p.User.FullName, p.User.Email }
+                    User = new {
+                        p.User.Id,
+                        p.User.FullName,
+                        p.User.ProfilePictureUrl
+                    }
                 })
                 .ToListAsync();
 
@@ -118,7 +135,11 @@ namespace DigiForum_BE.Controllers
                     p.CreatedAt,
                     p.UpdatedAt,
                     p.Status,
-                    User = new { p.User.Id, p.User.Username, p.User.FullName, p.User.Email }
+                    User = new {
+                        p.User.Id,
+                        p.User.FullName,
+                        p.User.ProfilePictureUrl
+                    }
                 })
                 .ToListAsync();
 
@@ -141,7 +162,6 @@ namespace DigiForum_BE.Controllers
                 return BadRequest("user_id không hợp lệ.");
             }
 
-            // Lấy danh sách bài đăng có status là approved và UserId từ token
             var posts = await _context.Posts
                 .Where(p => p.UserId == parsedUserId && p.Status == "declined")
                 .Include(p => p.User)
@@ -154,7 +174,11 @@ namespace DigiForum_BE.Controllers
                     p.CreatedAt,
                     p.UpdatedAt,
                     p.Status,
-                    User = new { p.User.Id, p.User.Username, p.User.FullName, p.User.Email }
+                    User = new {
+                        p.User.Id,
+                        p.User.FullName,
+                        p.User.ProfilePictureUrl
+                    }
                 })
                 .ToListAsync();
 
@@ -176,7 +200,11 @@ namespace DigiForum_BE.Controllers
                     p.CreatedAt,
                     p.UpdatedAt,
                     p.Status,
-                    User = new { p.User.Id, p.User.Username, p.User.Email }
+                    User = new {
+                        p.User.Id,
+                        p.User.FullName,
+                        p.User.ProfilePictureUrl
+                    }
                 })
                 .ToListAsync();
 
@@ -184,11 +212,41 @@ namespace DigiForum_BE.Controllers
         }
 
         [HttpGet("all-approved")]
-        [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> GetAllApprovedPosts()
         {
             var posts = await _context.Posts
-                .Where(p => p.Status == "approved")  // Lọc bài đăng có trạng thái approved
+                .Where(p => p.Status == "approved")
+                .Include(p => p.User) // Bao gồm thông tin User
+                .Select(p => new
+                {
+                    p.PostId,
+                    p.Title,
+                    p.Content,
+                    p.ImagePath,
+                    p.CreatedAt,
+                    p.UpdatedAt,
+                    p.Status,
+                    User = new {
+                        p.User.Id,
+                        p.User.FullName,
+                        p.User.ProfilePictureUrl
+                    },
+                    LikeCount = _context.Likes.Count(l => l.PostId == p.PostId && l.isLike == true),
+                    DisLikeCount = _context.Likes.Count(l => l.PostId == p.PostId && l.isLike == false),
+                    CommentCount = _context.Comments.Count(l => l.PostId == p.PostId)
+                })
+                .ToListAsync();
+
+            return Ok(posts);
+        }
+
+
+        [HttpGet("all-pending")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllPendingPosts()
+        {
+            var posts = await _context.Posts
+                .Where(p => p.Status == "pending")
                 .Include(p => p.User)
                 .Select(p => new
                 {
@@ -199,12 +257,44 @@ namespace DigiForum_BE.Controllers
                     p.CreatedAt,
                     p.UpdatedAt,
                     p.Status,
-                    User = new { p.User.Id, p.User.Username, p.User.Email }
+                    User = new {
+                        p.User.Id,
+                        p.User.FullName,
+                        p.User.ProfilePictureUrl
+                    }
                 })
                 .ToListAsync();
 
             return Ok(posts);
         }
+
+        [HttpGet("all-declined")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> GetAllDeclinedPosts()
+        {
+            var posts = await _context.Posts
+                .Where(p => p.Status == "declined")
+                .Include(p => p.User)
+                .Select(p => new
+                {
+                    p.PostId,
+                    p.Title,
+                    p.Content,
+                    p.ImagePath,
+                    p.CreatedAt,
+                    p.UpdatedAt,
+                    p.Status,
+                    User = new {
+                        p.User.Id,
+                        p.User.FullName,
+                        p.User.ProfilePictureUrl
+                    }
+                })
+                .ToListAsync();
+
+            return Ok(posts);
+        }
+
         public class UpdatePostRequest
         {
             public Guid PostId { get; set; }
@@ -215,29 +305,71 @@ namespace DigiForum_BE.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdatePostStatus([FromBody] UpdatePostRequest request)
         {
-            // Kiểm tra trạng thái hợp lệ
             var validStatuses = new[] { "pending", "approved", "declined" };
             if (!validStatuses.Contains(request.NewStatus))
             {
                 return BadRequest("Trạng thái không hợp lệ.");
             }
 
-            // Tìm bài viết theo postId
             var post = await _context.Posts.FindAsync(request.PostId);
             if (post == null)
             {
                 return NotFound("Bài đăng không tồn tại.");
             }
 
-            // Cập nhật trạng thái bài viết
-            post.Status = request.NewStatus;
-            post.UpdatedAt = DateTime.UtcNow;  // Cập nhật thời gian sửa đổi
+            // Lấy userId từ token
+            var userId = User.FindFirstValue("user_id");
 
-            // Lưu thay đổi vào database
+            if (userId == null)
+            {
+                return BadRequest("Không tìm thấy thông tin người dùng trong token.");
+            }
+
+            // Chuyển đổi userId thành Guid
+            if (!Guid.TryParse(userId, out Guid parsedUserId))
+            {
+                return BadRequest("user_id không hợp lệ.");
+            }
+
+            post.Status = request.NewStatus;
+            post.UpdatedAt = DateTime.UtcNow;  
+
             await _context.SaveChangesAsync();
+
+            var adminUser = await _context.Users.FindAsync(parsedUserId);
+
+            if (request.NewStatus == "approved")
+            {
+                var notification = new Notification
+                {
+                    SenderId = parsedUserId, 
+                    UserId = post.UserId, 
+                    Message = $"Bài viết của bạn đã được duyệt bởi Admin {adminUser.FullName}.",
+                    CreatedAt = DateTime.UtcNow,
+                };
+
+                _context.Notifications.Add(notification);
+                await _context.SaveChangesAsync();
+            }
+
+            else if (request.NewStatus == "declined")
+            {
+                var notification = new Notification
+                {
+                    SenderId = parsedUserId,
+                    UserId = post.UserId,
+                    Message = $"Bài viết của bạn đã bị từ chối bởi Admin {adminUser.FullName}.",
+                    CreatedAt = DateTime.UtcNow,
+                };
+
+                _context.Notifications.Add(notification);
+                await _context.SaveChangesAsync();
+            }
 
             return Ok("Cập nhật trạng thái bài viết thành công.");
         }
+
+
 
         [HttpPut("update-post")]
         [Authorize(Roles = "Admin,User")]

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -94,6 +95,31 @@ namespace DigiForum_BE.Controllers
             await _ctx.SaveChangesAsync();
 
             return Ok("Cập nhật thông tin người dùng thành công.");
+        }
+
+        [HttpPut("update-role")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdateUserRole([FromBody] User user)
+        {
+            var validRoles = Enum.GetValues(typeof(Role)).Cast<Role>().ToList();
+            if (user.Roles == null || !validRoles.Contains(user.Roles.Value))
+            {
+                return BadRequest("Role không hợp lệ.");
+            }
+
+            var existingUser = await _ctx.Users.FindAsync(user.Id);
+            if (existingUser == null)
+            {
+                return NotFound("User không tồn tại.");
+            }
+
+            existingUser.Roles = user.Roles;
+
+            existingUser.UpdatedAt = DateTime.UtcNow;
+
+            await _ctx.SaveChangesAsync();
+
+            return Ok("Cập nhật role thành công.");
         }
 
         [HttpDelete("delete-user")]

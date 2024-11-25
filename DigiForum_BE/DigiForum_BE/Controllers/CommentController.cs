@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace DigiForum_BE.Controllers
 {
@@ -19,14 +20,32 @@ namespace DigiForum_BE.Controllers
             _context = context;
         }
 
-        [HttpGet]
+        [HttpGet("get-all-comment-in-post")]
         public IActionResult GetComments([FromBody] Guid postId)
         {
-            var comments = _context.Comments.Where(c => c.PostId == postId).ToList();
+            var comments = _context.Comments
+                .Where(c => c.PostId == postId)
+                .Include(c => c.User)
+                .Select(c => new
+                {
+                    c.CommentId,
+                    c.Content,
+                    c.CreatedAt,
+                    c.UpdatedAt,
+                    User = new
+                    {
+                        c.User.Id,
+                        c.User.FullName,
+                        c.User.ProfilePictureUrl
+                    }
+                })
+                .ToList();
+
             return Ok(comments);
         }
 
-        [HttpPost]
+
+        [HttpPost("add")]
         [Authorize(Roles = "Admin,User")]
         public async Task<IActionResult> AddComment([FromBody] Comment comment)
         {
@@ -42,28 +61,31 @@ namespace DigiForum_BE.Controllers
                 return BadRequest("user_id không hợp lệ.");
             }
 
-            // Lấy thông tin người dùng từ token
-            comment.CommentId = Guid.NewGuid(); // Tạo mới CommentId với Guid
-            comment.UserId = parsedUserId; // Gán UserId từ token
+            if (comment.PostId == null)
+            {
+                return BadRequest("Cần truyền đủ PostId.");
+            }
+
+            comment.CommentId = Guid.NewGuid(); 
+            comment.UserId = parsedUserId; 
             comment.CreatedAt = DateTime.Now;
 
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetComments), new { postId = comment.PostId }, comment);
+            return Ok("Tạo comment thành công");
         }
 
-        [HttpPut("{commentId}")]
+        [HttpPut("update")]
         [Authorize(Roles = "Admin,User")]
-        public async Task<IActionResult> UpdateComment(Guid commentId, [FromBody] Comment updatedComment)
+        public async Task<IActionResult> UpdateComment([FromBody] Comment updatedComment)
         {
-            var comment = await _context.Comments.FindAsync(commentId);
+            var comment = await _context.Comments.FindAsync(updatedComment.CommentId);
             if (comment == null)
             {
                 return NotFound();
             }
 
-            // Kiểm tra nếu người dùng không phải là chủ bài viết hoặc comment
             var userIdFromToken = User.FindFirstValue("user_id");
             if (string.IsNullOrEmpty(userIdFromToken) || !Guid.TryParse(userIdFromToken, out Guid parsedUserId) || comment.UserId != parsedUserId)
             {
@@ -73,12 +95,12 @@ namespace DigiForum_BE.Controllers
             comment.Content = updatedComment.Content;
             comment.UpdatedAt = DateTime.Now;
             await _context.SaveChangesAsync();
-            return NoContent();
+            return Ok("Cập nhật comment thành công!");
         }
 
-        [HttpDelete("{commentId}")]
+        [HttpDelete("delete")]
         [Authorize(Roles = "Admin,User")]
-        public async Task<IActionResult> DeleteComment(Guid commentId)
+        public async Task<IActionResult> DeleteComment([FromBody] Guid commentId)
         {
             var comment = await _context.Comments.FindAsync(commentId);
             if (comment == null)
@@ -86,7 +108,6 @@ namespace DigiForum_BE.Controllers
                 return NotFound();
             }
 
-            // Kiểm tra nếu người dùng không phải là chủ bài viết hoặc comment
             var userIdFromToken = User.FindFirstValue("user_id");
             if (string.IsNullOrEmpty(userIdFromToken) || !Guid.TryParse(userIdFromToken, out Guid parsedUserId) || comment.UserId != parsedUserId)
             {
@@ -95,7 +116,42 @@ namespace DigiForum_BE.Controllers
 
             _context.Comments.Remove(comment);
             await _context.SaveChangesAsync();
-            return NoContent();
+            return Ok("Xóa comment thành công!");
+        }
+
+        [HttpDelete("admin/delete")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteUserComment([FromBody] Guid commentId)
+        {
+            var comment = await _context.Comments.FindAsync(commentId);
+            if (comment == null)
+            {
+                return NotFound();
+            }
+
+            // Lấy role từ token
+            var userRole = User.FindFirstValue(ClaimTypes.Role); 
+            var userIdFromToken = User.FindFirstValue("user_id");
+
+            // Kiểm tra role có phải Admin không
+            if (userRole == "Admin")
+            {
+                // Nếu là Admin, cho phép xóa comment
+                _context.Comments.Remove(comment);
+                await _context.SaveChangesAsync();
+                return Ok("Xóa comment thành công (Admin).");
+            }
+
+            // Nếu không phải Admin, kiểm tra quyền sở hữu
+            if (string.IsNullOrEmpty(userIdFromToken) || !Guid.TryParse(userIdFromToken, out Guid parsedUserId) || comment.UserId != parsedUserId)
+            {
+                return Unauthorized("Bạn không có quyền xóa comment này.");
+            }
+
+            // Nếu là user hợp lệ, cho phép xóa comment của chính họ
+            _context.Comments.Remove(comment);
+            await _context.SaveChangesAsync();
+            return Ok("Xóa comment thành công.");
         }
     }
 }

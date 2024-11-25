@@ -19,19 +19,49 @@ namespace DigiForum_BE.Controllers
         {
             _context = context;
         }
-
         [HttpGet("TrueLikes")]
         public IActionResult GetTrueLikes([FromBody] Guid postId)
         {
-            var likes = _context.Likes.Where(l => l.PostId == postId && l.isLike == true).ToList();
-            return Ok(likes);
+            var likesWithUserInfo = _context.Likes
+                .Where(l => l.PostId == postId && l.isLike == true)
+                .Select(l => new
+                {
+                    l.LikeId,
+                    l.PostId,
+                    l.UserId,
+                    User = new
+                    {
+                        l.User.Id,
+                        l.User.FullName,
+                        l.User.ProfilePictureUrl
+                    }
+                })
+                .ToList();
+
+            return Ok(likesWithUserInfo);
         }
+
 
         [HttpGet("FalseLikes")]
         public IActionResult GetFalseLikes([FromBody] Guid postId)
         {
-            var likes = _context.Likes.Where(l => l.PostId == postId && l.isLike == false).ToList();
-            return Ok(likes);
+            var DislikesWithUserInfo = _context.Likes
+                .Where(l => l.PostId == postId && l.isLike == true)
+                .Select(l => new
+                {
+                    l.LikeId,
+                    l.PostId,
+                    l.UserId,
+                    User = new
+                    {
+                        l.User.Id,
+                        l.User.FullName,
+                        l.User.ProfilePictureUrl
+                    }
+                })
+                .ToList();
+
+            return Ok(DislikesWithUserInfo);
         }
 
 
@@ -133,7 +163,7 @@ namespace DigiForum_BE.Controllers
             _context.Likes.Remove(existingLike);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok("Xóa like thành công");
         }
 
     }

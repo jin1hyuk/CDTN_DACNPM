@@ -7,13 +7,16 @@
         public bool? IsRead { get; set; } = false;
         public DateTime? CreatedAt { get; set; } = DateTime.UtcNow;
 
-        // Foreign Key liên kết với User
         public Guid? UserId { get; set; }
         public User? User { get; set; }
 
-        // Foreign Key liên kết với Post (nếu cần thiết)
         public Guid? PostId { get; set; }
         public Post? Post { get; set; }
+        public Guid? ReportId { get; set; }
+        public Report? Report { get; set; }
+
+        public Guid? SenderId { get; set; }
+        public User? Sender { get; set; }
     }
 
 }

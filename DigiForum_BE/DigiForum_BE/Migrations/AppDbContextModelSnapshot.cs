@@ -58,14 +58,14 @@ namespace DigiForum_BE.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
                     b.Property<Guid?>("PostId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool?>("isLike")
+                        .HasColumnType("bit");
 
                     b.HasKey("LikeId");
 
@@ -94,12 +94,17 @@ namespace DigiForum_BE.Migrations
                     b.Property<Guid?>("PostId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("SenderId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("NotificationId");
 
                     b.HasIndex("PostId");
+
+                    b.HasIndex("SenderId");
 
                     b.HasIndex("UserId");
 
@@ -108,33 +113,29 @@ namespace DigiForum_BE.Migrations
 
             modelBuilder.Entity("DigiForum_BE.Models.Post", b =>
                 {
-                    b.Property<Guid>("PostId")
+                    b.Property<Guid?>("PostId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ImagePath")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("PostId");
@@ -157,6 +158,12 @@ namespace DigiForum_BE.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("ReportContent")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("UserId")
@@ -264,12 +271,18 @@ namespace DigiForum_BE.Migrations
                         .WithMany()
                         .HasForeignKey("PostId");
 
+                    b.HasOne("DigiForum_BE.Models.User", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId");
+
                     b.HasOne("DigiForum_BE.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Post");
+
+                    b.Navigation("Sender");
 
                     b.Navigation("User");
                 });
@@ -279,8 +292,7 @@ namespace DigiForum_BE.Migrations
                     b.HasOne("DigiForum_BE.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("User");
                 });
