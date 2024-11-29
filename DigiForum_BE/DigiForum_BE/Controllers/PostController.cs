@@ -20,8 +20,8 @@ namespace DigiForum_BE.Controllers
             _context = context;
         }
 
-        [HttpPost("add")]
-        [Authorize(Roles = "User,Admin")]
+        [HttpPost("personal/add-post")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> AddPost([FromBody] Post post)
         {
 

@@ -19,8 +19,8 @@ namespace DigiForum_BE.Controllers
         {
             _context = context;
         }
-        [HttpGet("TrueLikes")]
-        public IActionResult GetTrueLikes([FromBody] Guid postId)
+        [HttpGet("user-post/get-list-users-like")]
+        public IActionResult GetListUsersLikeByPostId([FromBody] Guid postId)
         {
             var likesWithUserInfo = _context.Likes
                 .Where(l => l.PostId == postId && l.isLike == true)
@@ -33,7 +33,7 @@ namespace DigiForum_BE.Controllers
                     {
                         l.User.Id,
                         l.User.FullName,
-                        l.User.ProfilePictureUrl
+                        l.User.Avatar
                     }
                 })
                 .ToList();
@@ -42,8 +42,8 @@ namespace DigiForum_BE.Controllers
         }
 
 
-        [HttpGet("FalseLikes")]
-        public IActionResult GetFalseLikes([FromBody] Guid postId)
+        [HttpGet("user-post/get-list-users-dislike")]
+        public IActionResult GetListUsersDisLikeByPostId([FromBody] Guid postId)
         {
             var DislikesWithUserInfo = _context.Likes
                 .Where(l => l.PostId == postId && l.isLike == true)
@@ -56,7 +56,7 @@ namespace DigiForum_BE.Controllers
                     {
                         l.User.Id,
                         l.User.FullName,
-                        l.User.ProfilePictureUrl
+                        l.User.Avatar
                     }
                 })
                 .ToList();
@@ -66,9 +66,9 @@ namespace DigiForum_BE.Controllers
 
 
 
-        [HttpPost("add")]
-        [Authorize(Roles = "Admin,User")]
-        public async Task<IActionResult> AddLike([FromBody] Like like)
+        [HttpPost("personal/add-like")]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> AddReactToPost([FromBody] Like like)
         {
             var userId = User.FindFirstValue("user_id");
 
@@ -95,9 +95,9 @@ namespace DigiForum_BE.Controllers
             return Ok("Tạo like mới thành công");
         }
 
-        [HttpPut("update")]
-        [Authorize(Roles = "Admin,User")]
-        public async Task<IActionResult> UpdateLike([FromBody] Like like)
+        [HttpPut("personal/update-like")]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> UpdateReact([FromBody] Like like)
         {
             var userId = User.FindFirstValue("user_id");
 
@@ -131,8 +131,8 @@ namespace DigiForum_BE.Controllers
             return Ok("Cập nhật like thành công.");
         }
 
-        [HttpDelete("delete")]
-        [Authorize(Roles = "Admin,User")]
+        [HttpDelete("personal/delete-like")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> DeleteLike([FromBody] Like like)
         {
             var userId = User.FindFirstValue("user_id");

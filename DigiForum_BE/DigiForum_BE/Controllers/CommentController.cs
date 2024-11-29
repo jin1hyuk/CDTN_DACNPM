@@ -36,7 +36,7 @@ namespace DigiForum_BE.Controllers
                     {
                         c.User.Id,
                         c.User.FullName,
-                        c.User.ProfilePictureUrl
+                        c.User.Avatar
                     }
                 })
                 .ToList();
@@ -45,8 +45,8 @@ namespace DigiForum_BE.Controllers
         }
 
 
-        [HttpPost("add")]
-        [Authorize(Roles = "Admin,User")]
+        [HttpPost("personal/add-comment")]
+        [Authorize(Roles = "User")]
         public async Task<IActionResult> AddComment([FromBody] Comment comment)
         {
             var userIdFromToken = User.FindFirstValue("user_id");

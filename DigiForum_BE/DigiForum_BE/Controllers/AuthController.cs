@@ -13,6 +13,7 @@ namespace DigiForum_BE.Controllers
         private readonly AppDbContext _ctx;
         private readonly AuthService _authService;
         private readonly EmailService _emailService;
+        private static readonly Dictionary<string, (int FailedAttempts, DateTime LockoutEnd)> LoginAttempts = new();
 
         public AuthController(AppDbContext dbContext, AuthService authService, EmailService emailService)
         {
@@ -30,11 +31,6 @@ namespace DigiForum_BE.Controllers
                 return BadRequest("Email đã tồn tại.");
             }
 
-            if (await _ctx.Users.AnyAsync(u => u.Username == user.Username))
-            {
-                return BadRequest("Username đã tồn tại.");
-            }
-
             user.Roles = Role.User;
 
             await _ctx.Users.AddAsync(user);
@@ -46,28 +42,61 @@ namespace DigiForum_BE.Controllers
 
         public class SigninRequest
         {
-            public string? Username { get; set; }
+            public string? Email { get; set; }
             public string? Password { get; set; }
         }
 
 
         [HttpPost("signin")]
         [AllowAnonymous]
-        public async Task<IActionResult> Signin([FromBody] SigninRequest request)
+        public IActionResult Signin([FromBody] SigninRequest request)
         {
-            // Tìm người dùng bằng Username thay vì Email
-            var user = await _ctx.Users.SingleOrDefaultAsync(u => u.Username == request.Username);
+            var clientIp = HttpContext.Connection.RemoteIpAddress?.ToString();
 
-            // Kiểm tra nếu không tìm thấy người dùng hoặc mật khẩu không đúng
-            if (user == null || user.Password != request.Password)
+            if (LoginAttempts.ContainsKey(clientIp))
             {
-                return Unauthorized("Username hoặc mật khẩu không chính xác.");
+                var (failedAttempts, lockoutEnd) = LoginAttempts[clientIp];
+
+                if (DateTime.UtcNow < lockoutEnd)
+                {
+                    return BadRequest($"Bạn đã nhập sai quá nhiều lần. Vui lòng thử lại sau {lockoutEnd.Subtract(DateTime.UtcNow).Seconds} giây.");
+                }
             }
 
-            // Tạo và trả về token cho người dùng
+            var user = _ctx.Users.SingleOrDefault(u => u.Email == request.Email);
+
+            if (user == null || user.Password != request.Password)
+            {
+                if (!LoginAttempts.ContainsKey(clientIp))
+                {
+                    LoginAttempts[clientIp] = (1, DateTime.UtcNow);
+                }
+                else
+                {
+                    var (failedAttempts, _) = LoginAttempts[clientIp];
+                    failedAttempts++;
+
+                    if (failedAttempts >= 5)
+                    {
+                        LoginAttempts[clientIp] = (failedAttempts, DateTime.UtcNow.AddSeconds(30));
+                        return BadRequest($"Bạn đã nhập sai {failedAttempts} lần. Vui lòng thử lại sau 30 giây.");
+                    }
+
+                    LoginAttempts[clientIp] = (failedAttempts, DateTime.UtcNow);
+                }
+
+                return Unauthorized("Sai email hoặc mật khẩu.");
+            }
+
+            if (LoginAttempts.ContainsKey(clientIp))
+            {
+                LoginAttempts.Remove(clientIp);
+            }
+
             var token = _authService.GenerateToken(user);
             return Ok(new { token });
         }
+
 
         [HttpPost("forgot-password")]
         [AllowAnonymous]
@@ -77,7 +106,7 @@ namespace DigiForum_BE.Controllers
 
             if (user == null)
             {
-                return BadRequest("Email không tồn tại trong hệ thống.");
+                return BadRequest("Email không tồn tại.");
             }
             string verificationCode = GenerateRandomCode(6);
             user.VerificationCode = verificationCode;
@@ -87,13 +116,22 @@ namespace DigiForum_BE.Controllers
                 return BadRequest("Email không được để trống.");
             }
 
-            await _emailService.SendEmailAsync(user.Email, "Mã xác nhận đặt lại mật khẩu",
-                $"Mã xác nhận của bạn là: {verificationCode}");
+            try
+            {
+                await _emailService.SendEmailAsync(user.Email, "Mã xác nhận đặt lại mật khẩu",
+                    $"Mã xác nhận của bạn là: {verificationCode}");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error sending email: {ex.Message}");
+
+                return StatusCode(500, "Đã có lỗi xảy ra khi gửi email. Vui lòng thử lại sau.");
+            }
 
 
             await _ctx.SaveChangesAsync();
 
-            return Ok("Mã xác nhận đã được gửi đến email của bạn.");
+            return Ok("Mã xác minh gửi đến email thành công.");
         }
 
         public class ResetPasswordRequest
@@ -107,7 +145,6 @@ namespace DigiForum_BE.Controllers
         [HttpPost("reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
         {
-            // Kiểm tra nếu đối tượng request null
             if (request == null)
             {
                 return BadRequest("Dữ liệu yêu cầu không hợp lệ.");
@@ -122,7 +159,7 @@ namespace DigiForum_BE.Controllers
 
             if (user.VerificationCode != request.VerificationCode)
             {
-                return Unauthorized("Mã xác nhận không hợp lệ.");
+                return Unauthorized("Mã xác minh chưa đúng. Vui lòng nhập lại.");
             }
 
             if (user.VerificationCodeExpiration < DateTime.Now)
@@ -146,6 +183,5 @@ namespace DigiForum_BE.Controllers
             return new string(Enumerable.Repeat(chars, length)
               .Select(s => s[random.Next(s.Length)]).ToArray());
         }
-
     }
 }
