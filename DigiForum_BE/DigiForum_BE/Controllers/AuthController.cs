@@ -1,4 +1,5 @@
 ﻿using DigiForum_BE.Models;
+using DigiForum_BE.Models.DTOs.Auth;
 using DigiForum_BE.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,181 +8,77 @@ using Microsoft.EntityFrameworkCore;
 namespace DigiForum_BE.Controllers
 {
     [ApiController]
-    [Route("Auth")]
+    [Route("api/[Controller]")]
     public class AuthController : Controller
     {
-        private readonly AppDbContext _ctx;
-        private readonly AuthService _authService;
-        private readonly EmailService _emailService;
-        private static readonly Dictionary<string, (int FailedAttempts, DateTime LockoutEnd)> LoginAttempts = new();
-
-        public AuthController(AppDbContext dbContext, AuthService authService, EmailService emailService)
+        private readonly AuthService _auths;
+        private readonly EmailService _emails;
+        private readonly UserService _users;
+        private readonly PasswordService _passwords;
+        public AuthController(AuthService authService, EmailService emailService, UserService userService, PasswordService passwords)
         {
-            _ctx = dbContext;
-            _authService = authService;
-            _emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
+            _auths = authService;
+            _emails = emailService ?? throw new ArgumentNullException(nameof(emailService));
+            _users = userService;
+            _passwords = passwords;
         }
 
         [HttpPost("signup")]
         [AllowAnonymous]
-        public async Task<IActionResult> Signup([FromBody] User user)
+        public async Task<IActionResult> Signup([FromBody] SignupRequest signupRequest)
         {
-            if (await _ctx.Users.AnyAsync(u => u.Email == user.Email))
+            if (await _users.IsEmailExist(signupRequest.Email))
             {
                 return BadRequest("Email đã tồn tại.");
             }
-
-            user.Roles = Role.User;
-
-            await _ctx.Users.AddAsync(user);
-            await _ctx.SaveChangesAsync();
-
-            var token = _authService.GenerateToken(user);
-            return Ok(token);
+            await _users.CreateUser(signupRequest);
+            return Ok("Tạo người dùng thành công");
         }
-
-        public class SigninRequest
-        {
-            public string? Email { get; set; }
-            public string? Password { get; set; }
-        }
-
 
         [HttpPost("signin")]
         [AllowAnonymous]
         public IActionResult Signin([FromBody] SigninRequest request)
         {
-            var clientIp = HttpContext.Connection.RemoteIpAddress?.ToString();
-
-            if (LoginAttempts.ContainsKey(clientIp))
+            try
             {
-                var (failedAttempts, lockoutEnd) = LoginAttempts[clientIp];
-
-                if (DateTime.UtcNow < lockoutEnd)
-                {
-                    return BadRequest($"Bạn đã nhập sai quá nhiều lần. Vui lòng thử lại sau {lockoutEnd.Subtract(DateTime.UtcNow).Seconds} giây.");
-                }
+                var token = _users.Authenticate(request.Email, request.Password);
+                return Ok(new { token });
             }
-
-            var user = _ctx.Users.SingleOrDefault(u => u.Email == request.Email);
-
-            if (user == null || user.Password != request.Password)
+            catch (Exception ex)
             {
-                if (!LoginAttempts.ContainsKey(clientIp))
-                {
-                    LoginAttempts[clientIp] = (1, DateTime.UtcNow);
-                }
-                else
-                {
-                    var (failedAttempts, _) = LoginAttempts[clientIp];
-                    failedAttempts++;
-
-                    if (failedAttempts >= 5)
-                    {
-                        LoginAttempts[clientIp] = (failedAttempts, DateTime.UtcNow.AddSeconds(30));
-                        return BadRequest($"Bạn đã nhập sai {failedAttempts} lần. Vui lòng thử lại sau 30 giây.");
-                    }
-
-                    LoginAttempts[clientIp] = (failedAttempts, DateTime.UtcNow);
-                }
-
-                return Unauthorized("Sai email hoặc mật khẩu.");
+                return Unauthorized(ex.Message);
             }
-
-            if (LoginAttempts.ContainsKey(clientIp))
-            {
-                LoginAttempts.Remove(clientIp);
-            }
-
-            var token = _authService.GenerateToken(user);
-            return Ok(new { token });
         }
-
 
         [HttpPost("forgot-password")]
         [AllowAnonymous]
         public async Task<IActionResult> ForgotPassword([FromBody] string email)
         {
-            var user = await _ctx.Users.SingleOrDefaultAsync(u => u.Email == email);
-
-            if (user == null)
-            {
-                return BadRequest("Email không tồn tại.");
-            }
-            string verificationCode = GenerateRandomCode(6);
-            user.VerificationCode = verificationCode;
-            user.VerificationCodeExpiration = DateTime.Now.AddMinutes(15);
-            if (user.Email == null)
-            {
-                return BadRequest("Email không được để trống.");
-            }
-
             try
             {
-                await _emailService.SendEmailAsync(user.Email, "Mã xác nhận đặt lại mật khẩu",
-                    $"Mã xác nhận của bạn là: {verificationCode}");
+                var code = await _passwords.GenerateVerificationCode(email);
+                await _emails.SendEmailAsync(email, "Mã xác minh", $"Mã xác minh của bạn là: {code}");
+                return Ok("Mã xác minh đã được gửi.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error sending email: {ex.Message}");
-
-                return StatusCode(500, "Đã có lỗi xảy ra khi gửi email. Vui lòng thử lại sau.");
+                return BadRequest(ex.Message);
             }
-
-
-            await _ctx.SaveChangesAsync();
-
-            return Ok("Mã xác minh gửi đến email thành công.");
         }
-
-        public class ResetPasswordRequest
-        {
-            public string? VerificationCode { get; set; }
-            public string? Email { get; set; }
-            public string? NewPassword { get; set; }
-        }
-
 
         [HttpPost("reset-password")]
+        [AllowAnonymous]
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
         {
-            if (request == null)
+            try
             {
-                return BadRequest("Dữ liệu yêu cầu không hợp lệ.");
+                await _users.ResetPassword(request.Email, request.VerificationCode, request.NewPassword);
+                return Ok("Mật khẩu đã được đặt lại thành công.");
             }
-
-            var user = await _ctx.Users.SingleOrDefaultAsync(u => u.Email == request.Email);
-
-            if (user == null)
+            catch (Exception ex)
             {
-                return BadRequest("Yêu cầu không hợp lệ.");
+                return BadRequest(ex.Message);
             }
-
-            if (user.VerificationCode != request.VerificationCode)
-            {
-                return Unauthorized("Mã xác minh chưa đúng. Vui lòng nhập lại.");
-            }
-
-            if (user.VerificationCodeExpiration < DateTime.Now)
-            {
-                return Unauthorized("Mã xác nhận đã hết hạn.");
-            }
-
-            user.Password = request.NewPassword;
-            user.VerificationCode = null;
-            user.VerificationCodeExpiration = null;
-
-            await _ctx.SaveChangesAsync();
-
-            return Ok("Mật khẩu đã được đặt lại thành công.");
-        }
-
-        private string GenerateRandomCode(int length)
-        {
-            var random = new Random();
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-            return new string(Enumerable.Repeat(chars, length)
-              .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }

@@ -120,7 +120,7 @@ namespace DigiForum_BE.Controllers
                     {
                         r.User.Id,
                         r.User.FullName,
-                        r.User.ProfilePictureUrl
+                        r.User.Avatar
                     }
                 })
                 .ToListAsync();

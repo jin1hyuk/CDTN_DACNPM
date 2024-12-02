@@ -12,6 +12,10 @@ namespace DigiForum_BE.Models
         public DbSet<Like> Likes { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Report> Reports { get; set; }
+        public DbSet<PartnerRegistration> PartnerRegistrations { get; set; }
+        public DbSet<PartnerContract> PartnerContracts { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<AdminApproval> AdminApprovals { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -49,13 +53,19 @@ namespace DigiForum_BE.Models
                 .HasOne(n => n.User)
                 .WithMany()
                 .HasForeignKey(n => n.UserId)
-                .OnDelete(DeleteBehavior.Restrict); // Đổi thành Restrict để tránh vòng lặp
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Notification>()
+                .HasOne(n => n.Post)
+                .WithMany()
+                .HasForeignKey(n => n.PostId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Report>()
                 .HasOne(r => r.User)
                 .WithMany()
                 .HasForeignKey(r => r.UserId)
-                .OnDelete(DeleteBehavior.Restrict); // Đổi thành Restrict để tránh vòng lặp
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Report>()
                 .HasOne(r => r.Post)

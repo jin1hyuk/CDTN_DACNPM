@@ -142,3 +142,4 @@ C:\Users\Admin\Documents\CDTN_DACNPM\DigiForum_BE\DigiForum_BE\obj\Debug\net8.0\
 C:\Users\Admin\Documents\CDTN_DACNPM\DigiForum_BE\DigiForum_BE\obj\Debug\net8.0\DigiForum_BE.pdb
 C:\Users\Admin\Documents\CDTN_DACNPM\DigiForum_BE\DigiForum_BE\obj\Debug\net8.0\DigiForum_BE.genruntimeconfig.cache
 C:\Users\Admin\Documents\CDTN_DACNPM\DigiForum_BE\DigiForum_BE\obj\Debug\net8.0\ref\DigiForum_BE.dll
+C:\Users\Admin\Documents\CDTN_DACNPM\DigiForum_BE\DigiForum_BE\bin\Debug\net8.0\BCrypt.Net-Next.dll

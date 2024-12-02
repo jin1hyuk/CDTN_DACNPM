@@ -23,6 +23,10 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddTransient<AuthService>();
+builder.Services.AddScoped<PasswordService>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddTransient<BCryptService>();
+builder.Services.AddScoped<PostService>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {

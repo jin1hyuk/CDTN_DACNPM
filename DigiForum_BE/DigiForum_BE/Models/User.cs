@@ -1,14 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using DigiForum_BE.Models.Enum;
 
 namespace DigiForum_BE.Models
 {
     public record User
     {
-        public Guid? Id { get; set; } = Guid.NewGuid();
-
-        [Required(ErrorMessage = "Username không được để trống.")]
-        public string? Username { get; set; }
-
+        public Guid? Id { get; set; }
         [Required(ErrorMessage = "Email không được để trống.")]
         [EmailAddress(ErrorMessage = "Email không hợp lệ.")]
         public string? Email { get; set; }
@@ -34,19 +31,5 @@ namespace DigiForum_BE.Models
         public Role? Roles { get; set; }
 
         public User() { }
-    }
-
-    public enum Role
-    {
-        Admin,
-        User,
-        AdsUser
-    }
-
-    public enum Gender
-    {
-        Nam,
-        Nữ,
-        Khác
     }
 }

@@ -22,6 +22,32 @@ namespace DigiForum_BE.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("DigiForum_BE.Models.AdminApproval", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AdminComments")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ApprovalDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("PartnerRegistrationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PartnerRegistrationId");
+
+                    b.ToTable("AdminApprovals");
+                });
+
             modelBuilder.Entity("DigiForum_BE.Models.Comment", b =>
                 {
                     b.Property<Guid?>("CommentId")
@@ -94,6 +120,9 @@ namespace DigiForum_BE.Migrations
                     b.Property<Guid?>("PostId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("ReportId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid?>("SenderId")
                         .HasColumnType("uniqueidentifier");
 
@@ -104,11 +133,109 @@ namespace DigiForum_BE.Migrations
 
                     b.HasIndex("PostId");
 
+                    b.HasIndex("ReportId");
+
                     b.HasIndex("SenderId");
 
                     b.HasIndex("UserId");
 
                     b.ToTable("Notifications");
+                });
+
+            modelBuilder.Entity("DigiForum_BE.Models.PartnerContract", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ContractDetails")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("PartnerRegistrationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PartnerRegistrationId");
+
+                    b.ToTable("PartnerContracts");
+                });
+
+            modelBuilder.Entity("DigiForum_BE.Models.PartnerRegistration", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AdminComments")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("PaymentAmount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("RegistrationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SelectedPackage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ServiceDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PartnerRegistrations");
+                });
+
+            modelBuilder.Entity("DigiForum_BE.Models.Payment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<Guid>("PartnerRegistrationId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("PaymentDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PaymentStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PartnerRegistrationId");
+
+                    b.ToTable("Payments");
                 });
 
             modelBuilder.Entity("DigiForum_BE.Models.Post", b =>
@@ -187,17 +314,24 @@ namespace DigiForum_BE.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Avatar")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("Birthdate")
+                        .HasColumnType("datetime2");
+
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("Date")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Gender")
+                        .HasColumnType("int");
 
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
@@ -208,17 +342,11 @@ namespace DigiForum_BE.Migrations
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProfilePictureUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("Roles")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Username")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("VerificationCode")
                         .HasColumnType("nvarchar(max)");
@@ -229,6 +357,17 @@ namespace DigiForum_BE.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("DigiForum_BE.Models.AdminApproval", b =>
+                {
+                    b.HasOne("DigiForum_BE.Models.PartnerRegistration", "PartnerRegistration")
+                        .WithMany()
+                        .HasForeignKey("PartnerRegistrationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PartnerRegistration");
                 });
 
             modelBuilder.Entity("DigiForum_BE.Models.Comment", b =>
@@ -271,6 +410,10 @@ namespace DigiForum_BE.Migrations
                         .WithMany()
                         .HasForeignKey("PostId");
 
+                    b.HasOne("DigiForum_BE.Models.Report", "Report")
+                        .WithMany()
+                        .HasForeignKey("ReportId");
+
                     b.HasOne("DigiForum_BE.Models.User", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId");
@@ -282,9 +425,44 @@ namespace DigiForum_BE.Migrations
 
                     b.Navigation("Post");
 
+                    b.Navigation("Report");
+
                     b.Navigation("Sender");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DigiForum_BE.Models.PartnerContract", b =>
+                {
+                    b.HasOne("DigiForum_BE.Models.PartnerRegistration", "PartnerRegistration")
+                        .WithMany()
+                        .HasForeignKey("PartnerRegistrationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PartnerRegistration");
+                });
+
+            modelBuilder.Entity("DigiForum_BE.Models.PartnerRegistration", b =>
+                {
+                    b.HasOne("DigiForum_BE.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DigiForum_BE.Models.Payment", b =>
+                {
+                    b.HasOne("DigiForum_BE.Models.PartnerRegistration", "PartnerRegistration")
+                        .WithMany()
+                        .HasForeignKey("PartnerRegistrationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PartnerRegistration");
                 });
 
             modelBuilder.Entity("DigiForum_BE.Models.Post", b =>

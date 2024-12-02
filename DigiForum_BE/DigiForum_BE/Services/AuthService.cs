@@ -10,6 +10,7 @@ namespace DigiForum_BE.Services
 {
     public class AuthService
     {
+
         public string GenerateToken(User user)
         {
             var handler = new JwtSecurityTokenHandler();
@@ -34,7 +35,6 @@ namespace DigiForum_BE.Services
             var claims = new ClaimsIdentity();
             claims.AddClaim(new Claim(ClaimTypes.Name, user.Email));
             claims.AddClaim(new Claim("user_id", user.Id.ToString()));
-            // Nếu chỉ có một vai trò, không cần dùng foreach
             claims.AddClaim(new Claim(ClaimTypes.Role, user.Roles.ToString()));
 
             return claims;
